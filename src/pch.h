@@ -5,7 +5,7 @@
 
 #include <utility>
 #include <vector>
-
-
+#include <iostream>
+#include <cmath>
 
 typedef std::pair<int, int> Point;

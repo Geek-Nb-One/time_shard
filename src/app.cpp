@@ -47,19 +47,35 @@ void App::loop()
     bool running = true;
     SDL_Event e;
 
-    Camera camera;
+    Camera camera{768,432};
 
-    camera.setPosition(-50,-50);
+
+    camera.setPosition(0,0);
     SDL_Renderer *renderer = window.initRenderer("opengl");
 
     SDL_SetRenderLogicalPresentation(renderer, 768, 432, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
+
+    //Load Map
     SDL_Texture* texture = IMG_LoadTexture(renderer, "D:/Users/User/Documents/game_studio/projects/time_shard/assets/arts/ground_cave_24px_1.png");
     SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
-
+    
     if (!texture)
     {
         throw std::runtime_error("Failed to load texture: " + std::string(SDL_GetError()));
+    }
+
+    int textureIndex = map.addTile(texture, SDL_FRect{0,0,24,24});
+
+    for (int i = 0; i < 10; ++i)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            if ((i+j)% 2 == 0)
+            {
+                map.setTile(i, j, textureIndex);
+            }
+        }
     }
 
     while (running)
@@ -84,18 +100,9 @@ void App::loop()
         }
 
         camera.move(controlManager.getHorizontalDirection() * CAMERA_SPEED, controlManager.getVerticalDirection() * CAMERA_SPEED);
-
         
-        for (int i = 0; i < 32; ++i)
-        {
-            for (int j = 0; j < 20; ++j)
-            {
-            Point coord = camera.getScreenPosition(i * 24, j * 24);
-            SDL_FRect dest{static_cast<float>(coord.first), static_cast<float>(coord.second), 24, 24};
-            SDL_RenderTexture(renderer, texture, nullptr, &dest);
-            }
-        }
-     
+        map.draw(renderer, camera);
+
         SDL_RenderPresent(renderer);
         
         frameCount++;

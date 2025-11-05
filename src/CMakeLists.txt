@@ -5,5 +5,6 @@ app.cpp
 window.cpp
 camera.cpp
 control_manager.cpp
+map.cpp
 )
 

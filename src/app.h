@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 #include "window.h"
 #include "control_manager.h"
-
+#include "map.h"
 
 
 struct Statistic{
@@ -25,6 +25,7 @@ private:
 
     Window window;
     ControlManager controlManager;
+    Map map{10,10,0,0,24};
 
     Statistic stats;
 
