@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-#include "camera.h"
+#include <game_object/camera.h>
 
 
 struct Tile{

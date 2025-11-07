@@ -31,13 +31,13 @@ void Map::draw(SDL_Renderer *renderer, const Camera &camera)
 {
 
     int cameraX, cameraY;
-    camera.getPosition(cameraX, cameraY);
+    auto cameraPosition = camera.getTransform().position;
 
     int xOffset = camera.getWidth() / tileSize + padding * 2;
     int yOffset = camera.getHeight() / tileSize + padding * 2;
 
-    int ix = std::floor((cameraX + xOrigin) / static_cast<float>(tileSize)) - padding;
-    int iy = std::floor((cameraY + yOrigin) / static_cast<float>(tileSize)) - padding;
+    int ix = std::floor((cameraPosition.x + xOrigin) / static_cast<float>(tileSize)) - padding;
+    int iy = std::floor((cameraPosition.y + yOrigin) / static_cast<float>(tileSize)) - padding;
 
     for (int x = ix; x < xOffset + ix; ++x)
     {
@@ -52,11 +52,11 @@ void Map::draw(SDL_Renderer *renderer, const Camera &camera)
             {
                 continue; // Skip drawing if there's no texture
             }
-            Point screenPosition = camera.getScreenPosition(worldX, worldY);
+            auto screenPosition = camera.getScreenPosition(worldX, worldY,0);
 
             SDL_FRect destRect{
-                static_cast<float>(screenPosition.first),
-                static_cast<float>(screenPosition.second),
+                static_cast<float>(screenPosition.x),
+                static_cast<float>(screenPosition.y),
                 static_cast<float>(tileSize),
                 static_cast<float>(tileSize)};
             SDL_RenderTexture(renderer, tile.texture, &tile.srcRect, &destRect);
@@ -72,6 +72,7 @@ int Map::getCellIndex(int x, int y) const
     }
     return y * width + x;
 }
+
 int Map::getCellIndex(Point point) const
 {
     return getCellIndex(point.first, point.second);
@@ -86,8 +87,6 @@ Point Map::convertWorldToMap(Point point) const
 {
     return convertWorldToMap(point.first, point.second);
 }
-
-
 
 const Tile& Map::getTileAt(int x, int y) const
 {

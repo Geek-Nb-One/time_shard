@@ -4,7 +4,7 @@
 #include "window.h"
 #include "control_manager.h"
 #include "map.h"
-
+#include "state_machine/state_machine.h"
 
 struct Statistic{
     int fps = 0;
@@ -24,9 +24,9 @@ private:
     void processEvent(SDL_Event* event);
 
     Window window;
-    ControlManager controlManager;
-    Map map{10,10,0,0,24};
 
     Statistic stats;
-
+    Resource resource;
+    StateMachine stateMachine;
+    
 };

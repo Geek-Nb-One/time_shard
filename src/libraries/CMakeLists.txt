@@ -1,0 +1,1 @@
+add_subdirectory(game_object EXCLUDE_FROM_ALL)

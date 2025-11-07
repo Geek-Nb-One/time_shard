@@ -2,7 +2,7 @@
 
 ## Game Overview
 ### Concept
-Brief description of the game concept and core mechanics.
+You are an engieneer and love to build new invention. But to do so, you need to venture into the wild to collect the necessary material. Will you be able to 
 
 ### Target Audience
 Who is this game for?
