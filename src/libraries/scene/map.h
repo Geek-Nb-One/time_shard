@@ -2,8 +2,8 @@
 
 #include "pch.h"
 
-#include <game_object/camera.h>
-
+#include <game_object_t/camera.h>
+#include <managers/game_manager.h>
 
 struct Tile{
     SDL_Texture* texture = nullptr;
@@ -13,12 +13,14 @@ struct Tile{
 class Map{
 
 public:
-    Map(int width, int height, int xOrigin, int yOrigin, int tileSize);
+
+    void load(int width, int height, int xOrigin, int yOrigin, int tileSize);
+    void unload();
 
     int addTile(SDL_Texture* texture, SDL_FRect srcRect);
     void setTile(int x, int y, int textureIndex);
 
-    void draw(SDL_Renderer* renderer, const Camera& camera);
+    void render(const Camera* camera);
 
 private:
     std::vector<int> cells;
@@ -37,5 +39,7 @@ private:
 
 
     const Tile& getTileAt(int x, int y) const;
+
+    GameManager& gameManager = GameManager::getInstance();
 
 };

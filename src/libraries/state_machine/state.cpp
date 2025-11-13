@@ -1,11 +1,9 @@
 #include "state.h"
 #include "state_machine.h"  // Need full include to call methods
 
-void State::create(StateMachine *sm, Resource *res)
+void State::create(StateMachine *sm)
 {
     stateMachine = sm;
-    resource = res;
-    init();
 
 }
 
@@ -16,6 +14,4 @@ void State::changeState(const std::string &name)
     }
 }
 
-SDL_Renderer* State::getRenderer(){
-    return resource->renderer;
-}
+

@@ -1,1 +1,4 @@
 add_subdirectory(game_object EXCLUDE_FROM_ALL)
+add_subdirectory(state_machine EXCLUDE_FROM_ALL)
+add_subdirectory(scene EXCLUDE_FROM_ALL)
+add_subdirectory(managers EXCLUDE_FROM_ALL)

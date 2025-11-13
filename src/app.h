@@ -1,13 +1,14 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include "window.h"
-#include "control_manager.h"
-#include "map.h"
-#include "state_machine/state_machine.h"
+#include <managers/game_manager.h>
+#include <state_machine/state_machine.h>
+#include "libraries/renderer/renderer.h"
 
 struct Statistic{
+    std::vector<int> frameTimes;
     int fps = 0;
+    float usage = 0.0f;
 };
 
 
@@ -22,11 +23,18 @@ private:
     void loop();
     void cleanup();
     void processEvent(SDL_Event* event);
+    void update(float deltaTime);
 
-    Window window;
+    void uiConsole();
+    void uiStatistics();
 
     Statistic stats;
-    Resource resource;
     StateMachine stateMachine;
+    GameManager& gameManager = GameManager::getInstance();
+    InputManager* input = InputManager::getInstance();
+    Renderer renderer;
+
+    void tempInit();
+    
     
 };

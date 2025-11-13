@@ -1,8 +1,12 @@
 #include "state_machine.h"
 
-void StateMachine::setResource(Resource *res)
+#include "scene_state.h"
+
+void StateMachine::init()
 {
-    resource = res;
+    addState<SceneState>("scene");
+
+    changeState("scene");
 }
 
 void StateMachine::changeState(const std::string &name)
@@ -10,6 +14,7 @@ void StateMachine::changeState(const std::string &name)
     auto it = states.find(name);
     if (it != states.end()) {
         nextState = std::move(it->second);
+        Console::log("Changing state to: " + name);
     }
 }
 
@@ -36,7 +41,7 @@ void StateMachine::render() {
     }
 }
 
-void StateMachine::handleEvent(const SDL_Event& event) {
+void StateMachine::handleEvent(const SDL_Event* event) {
     if (currentState) {
         currentState->handleEvent(event);
     }

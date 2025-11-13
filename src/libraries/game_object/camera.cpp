@@ -1,47 +1,40 @@
 #include "camera.h"
+#include "game_object.h"
 
-
-glm::vec2 Camera::getScreenPosition(glm::vec3 position) const
+namespace ts
 {
-    glm::vec2 screenPosition;
-    screenPosition.x = position.x - getTransform().position.x;
-    screenPosition.y = position.y - getTransform().position.y;
-    return screenPosition;
-}
-
-glm::vec2 Camera::getScreenPosition(float x, float y, float z) const
-{
-    return getScreenPosition(glm::vec3(x, y, z));
-}
-
-void Camera::processEvent(const SDL_Event &event)
-{
-    if (event.type == SDL_EVENT_KEY_DOWN)
+    glm::vec2 Camera::getScreenPosition(glm::vec3 position) const
     {
-        switch (event.key.key)
-        {
-        case SDLK_W:
-            getTransform().position.y -= 10;
-            break;
-        case SDLK_S:
-            getTransform().position.y += 10;
-            break;
-        case SDLK_A:
-            getTransform().position.x -= 10;
-            break;
-        case SDLK_D:
-            getTransform().position.x += 10;
-            break;
-        }
+        glm::vec2 screenPosition;
+        screenPosition.x = position.x - transform->position.x;
+        screenPosition.y = position.y - transform->position.y;
+        return screenPosition;
     }
-}
 
+    glm::vec2 Camera::getScreenPosition(float x, float y, float z) const
+    {
+        return getScreenPosition(glm::vec3(x, y, z));
+    }
 
-int Camera::getWidth() const { return width; }
-int Camera::getHeight() const { return height; }
+    int Camera::getWidth() const { return width; }
+    int Camera::getHeight() const { return height; }
 
-void Camera::setDimension(int width, int height)
-{
-    this->width = width;
-    this->height = height;
+    void Camera::setDimension(int width, int height)
+    {
+        this->width = width;
+        this->height = height;
+    }
+
+    glm::vec3 Camera::getCenter() const
+    {
+        return transform->position + glm::vec3(width / 2.0f, height / 2.0f, 0.0f);
+    }
+
+    void Camera::init()
+    {
+        width = 800;
+        height = 600;
+        transform = getGameObject()->getComponent<Transform>();
+        Console::log("Camera initialized with width: " + std::to_string(width) + " height: " + std::to_string(height));
+    }
 }

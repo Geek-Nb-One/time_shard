@@ -1,25 +1,32 @@
 #pragma once
 
-#include "pch.h"
-#include "game_object.h"
+#include "component.h"
+#include  "transform.h"
 
-class Camera: public GameObject
+namespace ts
 {
+    class Camera : public Component
+    {
+    public:
 
-public:
+        void update(float deltaTime) override{};
+        void destroy() override{};
+        void init() override;
 
-    glm::vec2 getScreenPosition(glm::vec3 position) const;
-    glm::vec2 getScreenPosition(float x, float y, float z=0) const;
+        glm::vec2 getScreenPosition(glm::vec3 position) const;
+        glm::vec2 getScreenPosition(float x, float y, float z = 0) const;
 
-    void processEvent(const SDL_Event &event);
-    int getWidth() const;
-    int getHeight() const;
+        int getWidth() const;
+        int getHeight() const;
 
-    void setDimension(int width, int height);
+        void setDimension(int width, int height);
 
-private:
+        glm::vec3 getCenter() const;
+    private:
 
-    int width = 800;
-    int height = 600;
+        int width, height;
+        Transform* transform = nullptr;
 
-};
+        // Add transform-specific methods and members here
+    };
+}
