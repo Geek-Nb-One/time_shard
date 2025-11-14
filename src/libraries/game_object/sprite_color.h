@@ -4,10 +4,10 @@
 
 namespace ts
 {
-    class Border : public Component
+    class SpriteColor : public Component
     {
     public:
-        Border(const SDL_Color &color = SDL_Color{255, 255, 255, 255}, const SDL_FRect &rect = SDL_FRect{0, 0, 0, 0});
+        SpriteColor(const SDL_Color &color = SDL_Color{255, 255, 255, 255}, const SDL_FRect &rect = SDL_FRect{0, 0, 0, 0}, bool isFilled = false);
         void init() override;
         void update(float deltaTime) override {};
         void destroy() override {};
@@ -19,8 +19,12 @@ namespace ts
 
         void setRect(const SDL_FRect &newRect);
 
+        void setFilled(bool isFilled);
+        bool isFilled() const ;
+
     private:
         SDL_Color color = SDL_Color{255, 255, 255, 255};
         SDL_FRect rect;
+        bool filled = false;
     };
 }

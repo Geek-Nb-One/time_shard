@@ -4,7 +4,8 @@ add_library(
     transform.cpp
     game_object.cpp
     base_component.cpp
-    sprite.cpp
-    border.cpp
+    sprite_color.cpp
+    sprite_texture.cpp
+    player_controller.cpp
 )
 

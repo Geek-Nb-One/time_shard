@@ -82,6 +82,7 @@ void Renderer::newFrame()
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
     }
+    objectID = 0;
 
     renderReady = true;
 }
@@ -93,13 +94,10 @@ void Renderer::setCamera(glm::vec2 cameraPosition, int cameraWidth, int cameraHe
     camera.y = cameraPosition.y;
     camera.width = cameraWidth;
     camera.height = cameraHeight;
-
-    
 }
 
-void Renderer::render()
+void Renderer::renderCommand()
 {
-
     if (!renderReady)
     {
         throw std::runtime_error("Renderer not ready. Call newFrame() before render().");
@@ -112,11 +110,17 @@ void Renderer::render()
     // Render all objects (they're automatically sorted by z-depth due to std::set)
     for (const auto *obj : renderObjects)
     {
+        Console::logFrame("Rendering object " + std::to_string(obj->objectID) + " at position (" + std::to_string(obj->position.x) + ", " + std::to_string(obj->position.y) + ", " + std::to_string(obj->position.z) + ")");
+
         if (obj)
         {
             obj->render(sdlRenderer);
         }
     }
+}
+
+void Renderer::render()
+{
 
     if (Config::imGuiEnabled)
     {
@@ -140,20 +144,19 @@ void Renderer::addTextureRenderObject(const SDL_Texture *texture, const SDL_FRec
     obj.dstRect.x += position.x - static_cast<float>(camera.x);
     obj.dstRect.y += position.y - static_cast<float>(camera.y);
     obj.position = position;
-    renderObjects.insert(new TextureRenderObject(obj));
+    addRenderObject(new TextureRenderObject(obj));
 }
 
-void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position)
+void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled)
 {
-    Console::logFrame("Adding RectangleRenderObject at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ", " + std::to_string(position.z) + ")");
-    Console::logFrame("Camera position (" + std::to_string(camera.x) + ", " + std::to_string(camera.y) + ")");
     RectangleRenderObject obj;
     obj.rect = rect;
     obj.rect.x += position.x - static_cast<float>(camera.x);
     obj.rect.y += position.y - static_cast<float>(camera.y);
     obj.color = color;
     obj.position = position;
-    renderObjects.insert(new RectangleRenderObject(obj));
+    obj.filled = filled;
+    addRenderObject(new RectangleRenderObject(obj));
 }
 
 void Renderer::initRenderer()
@@ -205,4 +208,11 @@ void Renderer::setLogicalPresentation()
 void Renderer::disableLogicalPresentation()
 {
     SDL_SetRenderLogicalPresentation(sdlRenderer, windowWidth, windowHeight, SDL_LOGICAL_PRESENTATION_DISABLED);
+}
+
+void Renderer::addRenderObject(RenderObject *obj)
+{
+    obj->objectID = objectID++;
+    renderObjects.insert(obj);
+    Console::logFrame("Adding RenderObject " + std::to_string(obj->objectID) + " len of renderObjects " + std::to_string(renderObjects.size()));
 }

@@ -5,13 +5,11 @@
 struct RenderObject
 {
 
-    virtual void render(SDL_Renderer *renderer) const= 0;
+    virtual void render(SDL_Renderer *renderer) const = 0;
     glm::vec3 position;
+    int objectID;
 
-    bool operator<(const RenderObject &other) const
-    {
-        return position.z < other.position.z;
-    }
+
 };
 
 struct TextureRenderObject : public RenderObject
@@ -30,10 +28,18 @@ struct RectangleRenderObject : public RenderObject
 {
     SDL_FRect rect;
     SDL_Color color;
+    bool filled;
 
     void render(SDL_Renderer *renderer) const override
     {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderRect(renderer, &rect);
+        if (filled)
+        {
+            SDL_RenderFillRect(renderer, &rect);
+        }
+        else
+        {
+            SDL_RenderRect(renderer, &rect);
+        }
     }
 };

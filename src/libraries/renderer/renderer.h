@@ -12,29 +12,32 @@ class Renderer
 {
 
 public:
-
-
     void init();
     void destroy();
 
     void newFrame();
     void setCamera(glm::vec2 cameraPosition, int cameraWidth, int cameraHeight);
-    
+
+    void renderCommand();
     void render();
 
     void addTextureRenderObject(const SDL_Texture *texture, const SDL_FRect &srcRect, const SDL_FRect &dstRect, const glm::vec3 &position);
-    void addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position);
+    void addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled);
 
 private:
     struct RenderObjectComparator
     {
         bool operator()(const RenderObject *a, const RenderObject *b) const
         {
+            if (a->position.z == b->position.z)
+            {
+                return a->objectID < b->objectID;
+            }
             return a->position.z < b->position.z; // Sort by z-depth
-        }
+        };
     };
-
     std::set<RenderObject *, RenderObjectComparator> renderObjects;
+    int objectID = 0;
 
     SDL_Window *window = nullptr;
     SDL_Renderer *sdlRenderer = nullptr;
@@ -44,7 +47,7 @@ private:
     void initRenderer();
     bool renderReady = false;
 
-    ImGuiIO* io = nullptr;
+    ImGuiIO *io = nullptr;
 
     void setLogicalPresentation();
     void disableLogicalPresentation();
@@ -54,4 +57,5 @@ private:
     int logicalWidth = Config::LOGICAL_WIDTH;
     int logicalHeight = Config::LOGICAL_HEIGHT;
 
+    void addRenderObject(RenderObject *obj);
 };

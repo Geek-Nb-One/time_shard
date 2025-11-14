@@ -4,10 +4,10 @@
 
 enum ControlAction
 {
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    MOVE_UP,
+    MOVE_DOWN,
     CAMERA_ATTACH_TOGGLE
 };
 
@@ -64,16 +64,16 @@ private:
     {
         switch (action)
         {
-        case ControlAction::RIGHT:
+        case ControlAction::MOVE_RIGHT:
             return leftXvalue > deadZone;
             break;
-        case ControlAction::LEFT:
+        case ControlAction::MOVE_LEFT:
             return leftXvalue < -deadZone;
             break;
-        case ControlAction::UP:
+        case ControlAction::MOVE_UP:
             return leftYvalue < -deadZone;
             break;
-        case ControlAction::DOWN:
+        case ControlAction::MOVE_DOWN:
             return leftYvalue > deadZone;
             break;
         default:

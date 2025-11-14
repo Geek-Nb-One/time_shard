@@ -41,6 +41,14 @@ namespace ts
         void update(float deltaTime);
         void destroy();
 
+        const std::vector<std::unique_ptr<GameObject>> & getChildren()  const {
+            return children;
+        }
+
+        void addChild(std::unique_ptr<GameObject> child) {
+            children.push_back(std::move(child));
+        }
+
     private:
         std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
         std::unique_ptr<GameObject> *parent = nullptr;

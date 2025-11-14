@@ -17,27 +17,7 @@ namespace ts
 
         for (const auto &[id, object] : objects)
         {
-            Console::logFrame("Rendering object ID: " + std::to_string(id));
-            auto transform = object->getComponent<Transform>();
-            auto sprite = object->getComponent<Sprite>();
-
-            if (sprite && transform)
-            {
-                renderer.addTextureRenderObject(
-                    sprite->getTexture(),
-                    sprite->getSourceRect(),
-                    sprite->getDestinationRect(),
-                    transform->position);
-            }
-            auto border = object->getComponent<Border>();
-            if (border && transform)
-            {
-                Console::logFrame("Rendering border for object ID: " + std::to_string(id));
-                renderer.addRectangleRenderObject(
-                    border->getRect(),
-                    border->getColor(),
-                    transform->position);
-            }
+            addObjectToRender(renderer, object, glm::vec3(0.0f, 0.0f, 0.0f));
         }
     }
 
@@ -47,6 +27,72 @@ namespace ts
         for (const auto &[id, object] : objects)
         {
             object->update(deltaTime);
+        }
+    }
+
+    int Scene::addGameObject(GameObject *object)
+    {
+        int objID = nextID++;
+        objects[objID] = object;
+        return objID;
+    }
+
+    GameObject *Scene::getGameObject(int id) const
+    {
+        auto it = objects.find(id);
+        if (it != objects.end())
+        {
+            return it->second;
+        }
+        return nullptr;
+    }
+
+    void Scene::setMainCamera(GameObject *camera)
+    {
+        if(!camera->hasComponent<Camera>()){
+            throw std::runtime_error("GameObject does not have a Camera component");
+        }
+        mainCamera = camera;
+    }
+
+    void Scene::createCamera()
+    {
+        GameObject *camera = new GameObject();
+        camera->addComponent<Transform>();
+        auto c = camera->addComponent<Camera>();
+        addGameObject(camera);
+        setMainCamera(camera);
+        camera->init();
+        c->setDimension(Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
+    }
+    void Scene::addObjectToRender(Renderer& renderer,const GameObject * object, glm::vec3 base_position)
+    {
+        auto transform = object->getComponent<Transform>();
+        auto sprite = object->getComponent<SpriteTexture>();
+
+        glm::vec3 position = base_position + transform->position;
+
+        for(auto & child  : object->getChildren()){
+            addObjectToRender(renderer,child.get(),position);
+        }
+
+        if (sprite && transform)
+        {
+            renderer.addTextureRenderObject(
+                sprite->getTexture(),
+                sprite->getSourceRect(),
+                sprite->getDestinationRect(),
+                position);
+        }
+        auto sprite_color = object->getComponent<SpriteColor>();
+        if (sprite_color && transform)
+        {
+           
+            renderer.addRectangleRenderObject(
+                sprite_color->getRect(),
+                sprite_color->getColor(),
+                position, 
+                sprite_color->isFilled());
         }
     }
 }

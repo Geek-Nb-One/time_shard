@@ -84,16 +84,18 @@ void App::loop()
 
         // update(static_cast<float>(deltaTime));
         renderer.newFrame();
-        
+
         uiConsole();
         
         // uiStatistics();
 
         stateMachine.render(renderer);
 
-        uiFrameConsole();
+        renderer.renderCommand();
 
+        uiFrameConsole();
         renderer.render();
+
         frameCount++;
 
         Uint64 currentFPSTime = SDL_GetTicks();
@@ -119,6 +121,7 @@ void App::processEvent(SDL_Event *event)
 {
 
     gameManager.processEvent(event);
+    input->processEvent(event);
     stateMachine.handleEvent(event);
     if (Config::imGuiEnabled)
     {

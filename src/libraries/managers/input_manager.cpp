@@ -10,10 +10,10 @@ InputManager *InputManager::getInstance()
 
 void InputManager::init()
 {
-    actionActive[ControlAction::LEFT] = false;
-    actionActive[ControlAction::RIGHT] = false;
-    actionActive[ControlAction::UP] = false;
-    actionActive[ControlAction::DOWN] = false;
+    actionActive[ControlAction::MOVE_LEFT] = false;
+    actionActive[ControlAction::MOVE_RIGHT] = false;
+    actionActive[ControlAction::MOVE_UP] = false;
+    actionActive[ControlAction::MOVE_DOWN] = false;
     actionActive[ControlAction::CAMERA_ATTACH_TOGGLE] = false;
 
     initGamepad();
@@ -59,9 +59,9 @@ void InputManager::processEvent(const SDL_Event *event)
 int InputManager::getHorizontalDirection() const
 {
     int direction = 0;
-    if (isActive(ControlAction::LEFT))
+    if (isActive(ControlAction::MOVE_LEFT))
         direction -= 1;
-    if (isActive(ControlAction::RIGHT))
+    if (isActive(ControlAction::MOVE_RIGHT))
         direction += 1;
     return direction;
 }
@@ -69,9 +69,9 @@ int InputManager::getHorizontalDirection() const
 int InputManager::getVerticalDirection() const
 {
     int direction = 0;
-    if (isActive(ControlAction::DOWN))
+    if (isActive(ControlAction::MOVE_DOWN))
         direction += 1;
-    if (isActive(ControlAction::UP))
+    if (isActive(ControlAction::MOVE_UP))
         direction -= 1;
     return direction;
 }
@@ -119,10 +119,10 @@ void InputManager::updateTriggerAction()
 void InputManager::updatePressedAction()
 {
 
-    actionActive[ControlAction::LEFT] = keyIsPressed(SDLK_A) || keyIsPressed(SDLK_LEFT) || leftAxisMoved(ControlAction::LEFT);
-    actionActive[ControlAction::RIGHT] = keyIsPressed(SDLK_D) || keyIsPressed(SDLK_RIGHT) || leftAxisMoved(ControlAction::RIGHT);
-    actionActive[ControlAction::UP] = keyIsPressed(SDLK_W) || keyIsPressed(SDLK_UP) || leftAxisMoved(ControlAction::UP);
-    actionActive[ControlAction::DOWN] = keyIsPressed(SDLK_S) || keyIsPressed(SDLK_DOWN) || leftAxisMoved(ControlAction::DOWN);
+    actionActive[ControlAction::MOVE_LEFT] = keyIsPressed(SDLK_A) || keyIsPressed(SDLK_LEFT) || leftAxisMoved(ControlAction::MOVE_LEFT);
+    actionActive[ControlAction::MOVE_RIGHT] = keyIsPressed(SDLK_D) || keyIsPressed(SDLK_RIGHT) || leftAxisMoved(ControlAction::MOVE_RIGHT);
+    actionActive[ControlAction::MOVE_UP] = keyIsPressed(SDLK_W) || keyIsPressed(SDLK_UP) || leftAxisMoved(ControlAction::MOVE_UP);
+    actionActive[ControlAction::MOVE_DOWN] = keyIsPressed(SDLK_S) || keyIsPressed(SDLK_DOWN) || leftAxisMoved(ControlAction::MOVE_DOWN);
 }
 
 bool InputManager::keyIsPressed(SDL_Keycode key)

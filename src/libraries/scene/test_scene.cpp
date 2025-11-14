@@ -3,18 +3,31 @@
 namespace ts {
 
 void TestScene::load() {
-    GameObject* camera = new GameObject();
-    camera->addComponent<Transform>();
-    camera->addComponent<Camera>();
-    addGameObject(camera);
-    setMainCamera(camera);
-    camera->init();
+    createCamera();
 
     GameObject* player = new GameObject();
     player->addComponent<Transform>();
-    player->addComponent<Border>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-25, -25, 50, 50});
+    player->addComponent<SpriteColor>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-12, -12, 24, 24}, true);
+    player->addComponent<PlayerController>();
     addGameObject(player);
     player->init();
+   
+
+    GameObject * playerChild = new GameObject();
+    playerChild->addComponent<Transform>();
+    playerChild->addComponent<SpriteColor>(SDL_Color{0, 255, 0, 255}, SDL_FRect{-6, -6, 12, 12}, true);
+    player->addChild(std::unique_ptr<GameObject>(playerChild));
+    playerChild->init();
+    playerChild->getComponent<Transform>()->position = glm::vec3(100.0f, 100.0f, 0.0f);
+    
+
+
+    // GameObject* tile = new GameObject();
+    // tile->addComponent<Transform>();
+    // tile->addComponent<SpriteColor>(SDL_Color{0, 0, 255, 255}, SDL_FRect{-25, -25, 50, 50}, true);
+    // addGameObject(tile);
+    // tile->init();
+    // tile->getComponent<Transform>()->position = glm::vec3(0.0f, 0.0f, -1.0f);
 }
 
 void TestScene::unload() {

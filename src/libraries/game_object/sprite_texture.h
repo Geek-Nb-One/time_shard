@@ -4,12 +4,12 @@
 
 namespace ts
 {
-    class Sprite : public Component
+    class SpriteTexture : public Component
     {
 
     public:
 
-        Sprite(SDL_Texture* texture = nullptr, const SDL_FRect& srcRect = SDL_FRect{0,0,0,0}, const SDL_FRect& dstRect = SDL_FRect{0,0,0,0});
+        SpriteTexture(SDL_Texture* texture = nullptr, const SDL_FRect& srcRect = SDL_FRect{0,0,0,0}, const SDL_FRect& dstRect = SDL_FRect{0,0,0,0});
         
         void init() override;
 
@@ -24,7 +24,7 @@ namespace ts
 
         void setDestinationRect(const SDL_FRect &rect) ;
         SDL_FRect getDestinationRect() const;
-        
+
     private:
         SDL_Texture *texture = nullptr;
         SDL_FRect srcRect{0, 0, 0, 0};
