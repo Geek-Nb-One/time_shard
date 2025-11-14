@@ -19,12 +19,12 @@ void ts::Sprite::setSourceRect(const SDL_FRect &rect)
 {
     srcRect = rect;
 }
-}
+
 SDL_FRect ts::Sprite::getSourceRect() const
 {
     return srcRect;
 }
-}
+
 
 void ts::Sprite::setDestinationRect(const SDL_FRect &rect)
 {
