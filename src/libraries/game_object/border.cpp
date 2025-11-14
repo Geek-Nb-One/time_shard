@@ -2,7 +2,7 @@
 
 namespace ts
 {
-    Border::Border(const SDL_Color &color,const SDL_FRect &rect)
+    Border::Border(const SDL_Color &color, const SDL_FRect &rect)
         : rect(rect), color(color)
     {
     }

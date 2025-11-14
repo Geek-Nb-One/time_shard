@@ -145,7 +145,7 @@ void Renderer::addTextureRenderObject(const SDL_Texture *texture, const SDL_FRec
 
 void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position)
 {
-    Console::logFrame("Adding TextureRenderObject at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ", " + std::to_string(position.z) + ")");
+    Console::logFrame("Adding RectangleRenderObject at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ", " + std::to_string(position.z) + ")");
     Console::logFrame("Camera position (" + std::to_string(camera.x) + ", " + std::to_string(camera.y) + ")");
     RectangleRenderObject obj;
     obj.rect = rect;

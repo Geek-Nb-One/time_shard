@@ -8,20 +8,22 @@ void ts::Sprite::init()
 
 void ts::Sprite::setTexture(SDL_Texture *texture)
 {
+    this->texture = texture;
 }
 
 SDL_Texture *ts::Sprite::getTexture() const
 {
-    return nullptr;
+    return texture;
 }
-
 void ts::Sprite::setSourceRect(const SDL_FRect &rect)
 {
+    srcRect = rect;
 }
-
+}
 SDL_FRect ts::Sprite::getSourceRect() const
 {
-    return SDL_FRect();
+    return srcRect;
+}
 }
 
 void ts::Sprite::setDestinationRect(const SDL_FRect &rect)

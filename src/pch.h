@@ -57,7 +57,7 @@ public:
     {
         return _frame_log;
     }
-    static void newFrame(){
+    static void newFrame() {
         _frame_log = "";
 
     }
