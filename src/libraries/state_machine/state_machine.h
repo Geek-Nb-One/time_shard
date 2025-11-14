@@ -27,4 +27,5 @@ public:
     void update(float deltaTime);
     void render(Renderer& renderer);
     void handleEvent(const SDL_Event* event);
+    void destroy();
 };

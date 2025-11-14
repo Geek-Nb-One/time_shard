@@ -49,3 +49,7 @@ void StateMachine::handleEvent(const SDL_Event* event) {
         currentState->handleEvent(event);
     }
 }
+
+void StateMachine::destroy()
+{
+}

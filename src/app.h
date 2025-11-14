@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include <managers/game_manager.h>
 #include <state_machine/state_machine.h>
 #include "libraries/renderer/renderer.h"
+#include <managers/input_manager.h>
 
 struct Statistic{
     std::vector<int> frameTimes;
@@ -24,6 +24,8 @@ private:
     void cleanup();
     void processEvent(SDL_Event* event);
     void update(float deltaTime);
+    void render();
+
 
     void uiConsole();
     void uiStatistics();
@@ -31,7 +33,6 @@ private:
 
     Statistic stats;
     StateMachine stateMachine;
-    GameManager& gameManager = GameManager::getInstance();
     InputManager* input = InputManager::getInstance();
     Renderer renderer;
 

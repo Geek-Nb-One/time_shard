@@ -1,12 +1,6 @@
 #include "app.h"
 
-#include "libraries/game_object/game_object.h"
-#include "libraries/game_object/component.h"
-#include "libraries/game_object/transform.h"
-#include "libraries/game_object/camera.h"
 
-const char *APP_TITLE = "Time Shard";
-const char *WINDOW_NAME = "Time Shard Window";
 
 void App::run()
 {
@@ -35,9 +29,9 @@ void App::run()
 void App::init()
 {
 
-    gameManager.init();
     stateMachine.init();
     renderer.init();
+    input->init();
 
     Console::log("Application initialized");
 }
@@ -78,23 +72,7 @@ void App::loop()
 
         update(static_cast<float>(deltaTime));
 
-        // ImGui_ImplSDLRenderer3_NewFrame();
-        // ImGui_ImplSDL3_NewFrame();
-        // ImGui::NewFrame();
-
-        // update(static_cast<float>(deltaTime));
-        renderer.newFrame();
-
-        uiConsole();
-        
-        // uiStatistics();
-
-        stateMachine.render(renderer);
-
-        renderer.renderCommand();
-
-        uiFrameConsole();
-        renderer.render();
+        render();
 
         frameCount++;
 
@@ -107,20 +85,19 @@ void App::loop()
             frameCount = 0;
             lastFPSTime = currentFPSTime;
         }
-
-        // gameManager.renderer().present();
     }
 }
 
 void App::cleanup()
 {
-    gameManager.destroy();
+    input->destroy();
+    renderer.destroy();
+    stateMachine.destroy();
 }
 
 void App::processEvent(SDL_Event *event)
 {
 
-    gameManager.processEvent(event);
     input->processEvent(event);
     stateMachine.handleEvent(event);
     if (Config::imGuiEnabled)
@@ -133,6 +110,23 @@ void App::update(float deltaTime)
 {
     input->update();
     stateMachine.update(deltaTime);
+}
+
+void App::render()
+{
+    // update(static_cast<float>(deltaTime));
+    renderer.newFrame();
+
+    uiConsole();
+
+    uiStatistics();
+
+    stateMachine.render(renderer);
+
+    renderer.renderCommand();
+
+    uiFrameConsole();
+    renderer.render();
 }
 
 void App::uiConsole()
