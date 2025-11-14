@@ -16,7 +16,10 @@ public:
 
     void init();
     void destroy();
-    void newFrame(int cameraX, int cameraY, int cameraWidth, int cameraHeight);
+
+    void newFrame();
+    void setCamera(glm::vec2 cameraPosition, int cameraWidth, int cameraHeight);
+    
     void render();
 
     void addTextureRenderObject(const SDL_Texture *texture, const SDL_FRect &srcRect, const SDL_FRect &dstRect, const glm::vec3 &position);

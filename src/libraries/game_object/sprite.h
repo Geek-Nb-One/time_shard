@@ -1,16 +1,34 @@
 #pragma once
 
+#include "base_component.h"
 
-#include "component.h"
+namespace ts
+{
+    class Sprite : public Component
+    {
 
-class Sprite: Component{
+    public:
 
-public:
-    void init() override;
+        Sprite(SDL_Texture* texture = nullptr, const SDL_FRect& srcRect = SDL_FRect{0,0,0,0}, const SDL_FRect& dstRect = SDL_FRect{0,0,0,0});
+        
+        void init() override;
 
-    void setTexture(SDL_Texture* texture);
-    SDL_Texture* getTexture() const;
+        void update(float deltaTime) override{};
+        void destroy() override{};
 
-    void setSourceRect(const SDL_FRect& rect);
-    SDL_FRect getSourceRect() const;
-};
+        void setTexture(SDL_Texture *texture);
+        SDL_Texture *getTexture() const;
+
+        void setSourceRect(const SDL_FRect &rect);
+        SDL_FRect getSourceRect() const;
+
+        void setDestinationRect(const SDL_FRect &rect) ;
+        SDL_FRect getDestinationRect() const;
+        
+    private:
+        SDL_Texture *texture = nullptr;
+        SDL_FRect srcRect{0, 0, 0, 0};
+        SDL_FRect dstRect{0, 0, 0, 0};
+
+    };
+}

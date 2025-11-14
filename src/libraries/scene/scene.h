@@ -2,41 +2,49 @@
 
 #include "pch.h"
 #include <game_object/game_object.h>
+#include <renderer/renderer.h>
+#include <game_object/component.h>
 
-class Scene
+namespace ts
 {
-
-public:
-    void render();
-    void update(float deltaTime);
-    virtual load() = 0;
-    virtual unload() = 0;
-
-    int addGameObject(GameObject *object)
+    class Scene
     {
-        int objID = nextID++;
-        objects[objID] = object;
-        return objID;
-    }
 
-    GameObject *getGameObject(int id) const
-    {
-        auto it = objects.find(id);
-        if (it != objects.end())
+    public:
+        void render(Renderer &renderer);
+        void update(float deltaTime);
+        virtual void load() = 0;
+        virtual void unload() = 0;
+
+        int addGameObject(GameObject *object)
         {
-            return it->second;
+            int objID = nextID++;
+            objects[objID] = object;
+            return objID;
         }
-        return nullptr;
-    }
 
-    void setMainCamera(Camera *cam)
-    {
-        mainCamera = cam;
-    }
+        GameObject *getGameObject(int id) const
+        {
+            auto it = objects.find(id);
+            if (it != objects.end())
+            {
+                return it->second;
+            }
+            return nullptr;
+        }
 
-private:
-    std::unordered_map<int, GameObject *> objects;
-    Camera *mainCamera = nullptr;
+        void setMainCamera(GameObject *camera)
+        {
+            if(!camera->hasComponent<Camera>()){
+                throw std::runtime_error("GameObject does not have a Camera component");
+            }
+            mainCamera = camera;
+        }
 
-    int nextID = 0;
-};
+    private:
+        std::unordered_map<int, GameObject *> objects;
+        GameObject *mainCamera = nullptr;
+
+        int nextID = 0;
+    };
+}

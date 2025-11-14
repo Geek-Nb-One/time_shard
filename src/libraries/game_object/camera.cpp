@@ -3,18 +3,6 @@
 
 namespace ts
 {
-    glm::vec2 Camera::getScreenPosition(glm::vec3 position) const
-    {
-        glm::vec2 screenPosition;
-        screenPosition.x = position.x - transform->position.x;
-        screenPosition.y = position.y - transform->position.y;
-        return screenPosition;
-    }
-
-    glm::vec2 Camera::getScreenPosition(float x, float y, float z) const
-    {
-        return getScreenPosition(glm::vec3(x, y, z));
-    }
 
     int Camera::getWidth() const { return width; }
     int Camera::getHeight() const { return height; }
@@ -36,5 +24,10 @@ namespace ts
         height = 600;
         transform = getGameObject()->getComponent<Transform>();
         Console::log("Camera initialized with width: " + std::to_string(width) + " height: " + std::to_string(height));
+    }
+    glm::vec2 Camera::getScreenPosition() const
+    {
+
+        return glm::vec2(transform->position.x - width / 2.0f, transform->position.y - height / 2.0f);
     }
 }

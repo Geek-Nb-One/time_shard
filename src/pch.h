@@ -44,6 +44,25 @@ public:
         return _log;
     }
 
+    static void logFrame(const char* message)
+    {
+        _frame_log += std::string(message) + "\n";
+    }
+
+    static void logFrame(std::string message)
+    {
+        _frame_log += message + "\n";
+    }
+    static std::string getFrameLog()
+    {
+        return _frame_log;
+    }
+    static void newFrame(){
+        _frame_log = "";
+
+    }
+
 private:
     static inline std::string _log;
+    static inline std::string _frame_log;
 };

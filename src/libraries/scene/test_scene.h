@@ -1,25 +1,21 @@
 #pragma once
 
-
 #include "scene.h"
-#include "map.h"
-#include <game_object_t/game_object.h>
+#include <game_object/game_object.h>
+#include <game_object/camera.h>
 
+namespace ts
+{
 
+    class TestScene : public Scene
+    {
+    public:
+        void load() override;
+        void unload() override;
 
-class TestScene: public Scene{
-public:
-    void load() override;
-    void unload() override;
-    
-private:
+    private:
+        // void loadMap();
 
-    GameManager& gameManager = GameManager::getInstance();
-    
-    void loadMap();
-
-    bool trackPlayer = true;
-    
-};
-
-
+        bool trackPlayer = true;
+    };
+}

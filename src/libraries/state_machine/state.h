@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../pch.h"
-
+#include <renderer/renderer.h>
 
 // Forward declaration to avoid circular dependency
 class StateMachine;
@@ -17,7 +17,7 @@ public:
     
     virtual void enter() = 0;
     virtual void update(float deltaTime) = 0;
-    virtual void render() = 0;
+    virtual void render(Renderer& renderer) = 0;
     virtual void handleEvent(const SDL_Event* event) = 0;
     virtual void exit() = 0;
 

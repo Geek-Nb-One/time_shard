@@ -24,7 +24,7 @@ void Renderer::init()
     // Set renderer blend mode for transparency
     SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
     setLogicalPresentation();
-    
+
     if (Config::imGuiEnabled)
     {
         IMGUI_CHECKVERSION();
@@ -66,14 +66,8 @@ void Renderer::destroy()
     }
 }
 
-void Renderer::newFrame(int cameraX, int cameraY, int cameraWidth, int cameraHeight)
+void Renderer::newFrame()
 {
-
-    camera.x = cameraX;
-    camera.y = cameraY;
-    camera.width = cameraWidth;
-    camera.height = cameraHeight;
-
     // Clear render objects for next frame
     for (auto *obj : renderObjects)
     {
@@ -90,6 +84,17 @@ void Renderer::newFrame(int cameraX, int cameraY, int cameraWidth, int cameraHei
     }
 
     renderReady = true;
+}
+
+void Renderer::setCamera(glm::vec2 cameraPosition, int cameraWidth, int cameraHeight)
+{
+
+    camera.x = cameraPosition.x;
+    camera.y = cameraPosition.y;
+    camera.width = cameraWidth;
+    camera.height = cameraHeight;
+
+    
 }
 
 void Renderer::render()
@@ -140,6 +145,8 @@ void Renderer::addTextureRenderObject(const SDL_Texture *texture, const SDL_FRec
 
 void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position)
 {
+    Console::logFrame("Adding TextureRenderObject at position (" + std::to_string(position.x) + ", " + std::to_string(position.y) + ", " + std::to_string(position.z) + ")");
+    Console::logFrame("Camera position (" + std::to_string(camera.x) + ", " + std::to_string(camera.y) + ")");
     RectangleRenderObject obj;
     obj.rect = rect;
     obj.rect.x += position.x - static_cast<float>(camera.x);

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "component.h"
-#include  "transform.h"
+#include "base_component.h"
+#include "transform.h"
 
 namespace ts
 {
@@ -13,8 +13,8 @@ namespace ts
         void destroy() override{};
         void init() override;
 
-        glm::vec2 getScreenPosition(glm::vec3 position) const;
-        glm::vec2 getScreenPosition(float x, float y, float z = 0) const;
+        glm::vec2 getScreenPosition() const;
+
 
         int getWidth() const;
         int getHeight() const;

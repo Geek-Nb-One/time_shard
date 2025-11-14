@@ -5,7 +5,7 @@ void SceneState::enter()
     
     Console::log("Entering SceneState");
     if(!sceneLoaded && scene == nullptr){
-        scene = std::make_unique<TestScene>();
+        scene = std::make_unique<ts::TestScene>();
         scene->load();
         sceneLoaded = true;
         Console::log("Scene loaded in SceneState");
@@ -20,10 +20,10 @@ void SceneState::exit()
     }
 }
 
-void SceneState::render()
+void SceneState::render(Renderer& renderer)
 {
     if(scene && sceneLoaded){
-        scene->render();
+        scene->render(renderer);
     }
 }
 

@@ -27,6 +27,7 @@ private:
 
     void uiConsole();
     void uiStatistics();
+    void uiFrameConsole();
 
     Statistic stats;
     StateMachine stateMachine;
@@ -34,7 +35,6 @@ private:
     InputManager* input = InputManager::getInstance();
     Renderer renderer;
 
-    void tempInit();
     
     
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "component.h"
+#include "base_component.h"
 
 namespace ts
 {

@@ -1,38 +1,52 @@
 #include "scene.h"
 
-
-void Scene::render()
+namespace ts
 {
-    gameManager.renderer().setCamera(mainCamera->getTransform().position);
-    map.render(mainCamera);
 
-    for (auto obj : objects)
+    void Scene::render(Renderer &renderer)
     {
-        gameManager.renderer().renderGameObject(obj);
+        if (mainCamera == nullptr)
+        {
+            throw std::runtime_error("Main camera is not set for the scene");
+        }
+
+        renderer.setCamera(
+            mainCamera->getComponent<Camera>()->getScreenPosition(),
+            mainCamera->getComponent<Camera>()->getWidth(),
+            mainCamera->getComponent<Camera>()->getHeight());
+
+        for (const auto &[id, object] : objects)
+        {
+            Console::logFrame("Rendering object ID: " + std::to_string(id));
+            auto transform = object->getComponent<Transform>();
+            auto sprite = object->getComponent<Sprite>();
+
+            if (sprite && transform)
+            {
+                renderer.addTextureRenderObject(
+                    sprite->getTexture(),
+                    sprite->getSourceRect(),
+                    sprite->getDestinationRect(),
+                    transform->position);
+            }
+            auto border = object->getComponent<Border>();
+            if (border && transform)
+            {
+                Console::logFrame("Rendering border for object ID: " + std::to_string(id));
+                renderer.addRectangleRenderObject(
+                    border->getRect(),
+                    border->getColor(),
+                    transform->position);
+            }
+        }
     }
-}
 
-void Scene::update(float deltaTime)
-{
-     
+    void Scene::update(float deltaTime)
+    {
 
-    // player->setDirection(
-    //     static_cast<float>(input->getHorizontalDirection()),
-    //     static_cast<float>(input->getVerticalDirection()));
-
-    // player->update(deltaTime);
-
-    // if (input->isActive(ControlAction::CAMERA_ATTACH_TOGGLE))
-    // {
-    //     trackPlayer = !trackPlayer;
-    //     if (trackPlayer)
-    //     {
-    //         cameraTracker.trackObject(player);
-    //     }
-    //     else
-    //     {
-    //         cameraTracker.trackObject(nullptr);
-    //     }
-    // }
-    // cameraTracker.update(deltaTime);
+        for (const auto &[id, object] : objects)
+        {
+            object->update(deltaTime);
+        }
+    }
 }

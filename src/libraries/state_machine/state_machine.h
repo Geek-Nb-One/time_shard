@@ -3,6 +3,7 @@
 
 #include "state.h"
 #include "pch.h"
+#include <renderer/renderer.h>  
 
 class StateMachine {
 private:
@@ -24,6 +25,6 @@ public:
 
     void changeState(const std::string& name);
     void update(float deltaTime);
-    void render();
+    void render(Renderer& renderer);
     void handleEvent(const SDL_Event* event);
 };

@@ -4,8 +4,8 @@
 
 void StateMachine::init()
 {
-    addState<SceneState>("scene");
 
+    addState<SceneState>("scene");
     changeState("scene");
 }
 
@@ -21,6 +21,7 @@ void StateMachine::changeState(const std::string &name)
 void StateMachine::update(float deltaTime) {
     // Handle state transitions
     if (nextState) {
+        
         if (currentState) {
             currentState->exit();
         }
@@ -35,9 +36,11 @@ void StateMachine::update(float deltaTime) {
     }
 }
 
-void StateMachine::render() {
+void StateMachine::render(Renderer& renderer) {
+    
     if (currentState) {
-        currentState->render();
+
+        currentState->render(renderer);
     }
 }
 

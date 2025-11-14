@@ -34,7 +34,6 @@ void App::run()
 
 void App::init()
 {
-    tempInit();
 
     gameManager.init();
     stateMachine.init();
@@ -51,6 +50,9 @@ void App::loop()
 
     while (running)
     {
+
+        Console::newFrame();
+
         static Uint64 lastTime = SDL_GetPerformanceCounter();
         Uint64 currentTime = SDL_GetPerformanceCounter();
         double deltaTime = (double)(currentTime - lastTime) / SDL_GetPerformanceFrequency();
@@ -74,25 +76,26 @@ void App::loop()
             }
         }
 
+        update(static_cast<float>(deltaTime));
+
         // ImGui_ImplSDLRenderer3_NewFrame();
         // ImGui_ImplSDL3_NewFrame();
         // ImGui::NewFrame();
 
         // update(static_cast<float>(deltaTime));
-        renderer.newFrame(0, 0, Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
+        renderer.newFrame();
+        
         uiConsole();
+        
         // uiStatistics();
-        // ImGui::Render();
 
-        // gameManager.renderer().clear();
-        // stateMachine.render();
-        // gameManager.renderer().setLogicalPresentation(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT);
-        // gameManager.renderer().renderImGui();
-        // gameManager.renderer().setLogicalPresentation(Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
+        stateMachine.render(renderer);
 
-        renderer.addRectangleRenderObject(SDL_FRect{0, 0, 50, 50}, SDL_Color{255, 0, 0, 255}, glm::vec3(200.0f, 200.0f, 0.0f));
+        uiFrameConsole();
+
         renderer.render();
         frameCount++;
+
         Uint64 currentFPSTime = SDL_GetTicks();
         stats.fps = static_cast<int>(frameCount * 1000 / (currentFPSTime - lastFPSTime + 1));
         stats.frameTimes.push_back(static_cast<int>(currentFPSTime - startFrameTime));
@@ -148,12 +151,9 @@ void App::uiStatistics()
     ImGui::End();
 }
 
-void App::tempInit()
+void App::uiFrameConsole()
 {
-
-    ts::GameObject obj;
-
-    obj.addComponent<ts::Transform>();
-    obj.addComponent<ts::Camera>();
-    obj.initComponent();
+    ImGui::Begin("Frame Console");
+    ImGui::Text(Console::getFrameLog().c_str());
+    ImGui::End();
 }

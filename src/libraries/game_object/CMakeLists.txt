@@ -3,6 +3,8 @@ add_library(
     camera.cpp
     transform.cpp
     game_object.cpp
-    component.cpp
+    base_component.cpp
+    sprite.cpp
+    border.cpp
 )
 
