@@ -1,7 +1,6 @@
 add_library(managers STATIC
-render_manager.cpp
 input_manager.cpp
-game_manager.cpp
+
 )
 
 
