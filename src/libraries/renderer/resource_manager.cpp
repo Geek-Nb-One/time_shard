@@ -29,7 +29,7 @@ namespace ts
         // Create SDL texture from surface
         int width, height;
         SDL_Texture *texture = renderer.loadTexture(path, width, height);
-
+        SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
         if (!texture)
         {
             newTextureID.invalid = true;
@@ -76,7 +76,7 @@ namespace ts
         }   
         return false;
     }
-    void ResourceManager::destroy()
+    void ResourceManager::unload()
     {
         for(auto& pair : textures){
             if(pair.second->sdlTexture){

@@ -3,6 +3,7 @@
 #include "scene.h"
 #include <game_object/game_object.h>
 #include <game_object/camera.h>
+#include "../renderer/resource_manager.h"
 
 namespace ts
 {
@@ -17,5 +18,7 @@ namespace ts
         // void loadMap();
 
         bool trackPlayer = true;
+        ResourceManager resourceManager;
+
     };
 }

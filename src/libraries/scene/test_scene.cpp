@@ -3,11 +3,18 @@
 namespace ts {
 
 void TestScene::load(Renderer *renderer) {
+
+    resourceManager.loadTexture(*renderer, "tiles", "D:\\Users\\User\\Documents\\game_studio\\projects\\time_shard\\assets\\arts\\ground_cave_2x2_1.png");
+
     createCamera();
 
     GameObject* player = new GameObject();
     player->addComponent<Transform>();
-    player->addComponent<SpriteColor>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-12, -12, 24, 24}, true);
+
+    SDL_FRect srcRect = SDL_FRect{0, 0 ,24,24};
+    SDL_FRect dstRect = SDL_FRect{-12, -12, 24, 24};
+
+    player->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcRect, dstRect);
     player->addComponent<PlayerController>();
     addGameObject(player);
     player->init();
@@ -33,6 +40,9 @@ void TestScene::load(Renderer *renderer) {
 
 void TestScene::unload() {
     // Unload test scene resources
+
+    resourceManager.unload();
+
 }
 
 } // namespace ts
