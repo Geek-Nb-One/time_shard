@@ -1,12 +1,17 @@
 #include "scene_state.h"
 
+SceneState::SceneState(ts::Renderer *renderer)
+{
+    this->renderer = renderer;
+}
+
 void SceneState::enter()
 {
     
     Console::log("Entering SceneState");
     if(!sceneLoaded && scene == nullptr){
         scene = std::make_unique<ts::TestScene>();
-        scene->load();
+        scene->load(renderer);
         sceneLoaded = true;
         Console::log("Scene loaded in SceneState");
     }
@@ -20,7 +25,7 @@ void SceneState::exit()
     }
 }
 
-void SceneState::render(ts::Renderer& renderer)
+void SceneState::render()
 {
     if(scene && sceneLoaded){
         scene->render(renderer);

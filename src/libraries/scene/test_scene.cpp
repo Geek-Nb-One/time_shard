@@ -2,7 +2,7 @@
 
 namespace ts {
 
-void TestScene::load() {
+void TestScene::load(Renderer *renderer) {
     createCamera();
 
     GameObject* player = new GameObject();
@@ -20,6 +20,7 @@ void TestScene::load() {
     playerChild->init();
     playerChild->getComponent<Transform>()->position = glm::vec3(100.0f, 100.0f, 0.0f);
     
+
 
 
     // GameObject* tile = new GameObject();

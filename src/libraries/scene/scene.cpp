@@ -3,14 +3,14 @@
 namespace ts
 {
 
-    void Scene::render(Renderer &renderer)
+    void Scene::render(Renderer *renderer)
     {
         if (mainCamera == nullptr)
         {
             throw std::runtime_error("Main camera is not set for the scene");
         }
 
-        renderer.setCamera(
+        renderer->setCamera(
             mainCamera->getComponent<Camera>()->getScreenPosition(),
             mainCamera->getComponent<Camera>()->getWidth(),
             mainCamera->getComponent<Camera>()->getHeight());
@@ -65,7 +65,7 @@ namespace ts
         camera->init();
         c->setDimension(Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
     }
-    void Scene::addObjectToRender(Renderer& renderer,const GameObject * object, glm::vec3 base_position)
+    void Scene::addObjectToRender(Renderer* renderer,const GameObject * object, glm::vec3 base_position)
     {
         auto transform = object->getComponent<Transform>();
         auto sprite = object->getComponent<SpriteTexture>();
@@ -78,7 +78,7 @@ namespace ts
 
         if (sprite && transform)
         {
-            renderer.addTextureRenderObject(
+            renderer->addTextureRenderObject(
                 sprite->getTexture(),
                 sprite->getSourceRect(),
                 sprite->getDestinationRect(),
@@ -88,7 +88,7 @@ namespace ts
         if (sprite_color && transform)
         {
            
-            renderer.addRectangleRenderObject(
+            renderer->addRectangleRenderObject(
                 sprite_color->getRect(),
                 sprite_color->getColor(),
                 position, 

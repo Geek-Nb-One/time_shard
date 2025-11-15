@@ -10,7 +10,7 @@ namespace ts
     class TestScene : public Scene
     {
     public:
-        void load() override;
+        void load(Renderer *renderer) override;
         void unload() override;
 
     private:

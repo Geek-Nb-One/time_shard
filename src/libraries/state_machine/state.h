@@ -17,7 +17,7 @@ public:
     
     virtual void enter() = 0;
     virtual void update(float deltaTime) = 0;
-    virtual void render(ts::Renderer& renderer) = 0;
+    virtual void render() = 0;
     virtual void handleEvent(const SDL_Event* event) = 0;
     virtual void exit() = 0;
 

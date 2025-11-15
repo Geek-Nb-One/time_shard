@@ -1,7 +1,5 @@
 #include "app.h"
 
-
-
 void App::run()
 {
 
@@ -28,9 +26,8 @@ void App::run()
 
 void App::init()
 {
-
-    stateMachine.init();
     renderer.init();
+    stateMachine.init(&renderer);
     input->init();
 
     Console::log("Application initialized");
@@ -121,7 +118,7 @@ void App::render()
 
     uiStatistics();
 
-    stateMachine.render(renderer);
+    stateMachine.render();
 
     renderer.renderCommand();
 

@@ -9,13 +9,15 @@
 class SceneState : public State
 {
 public:
+    SceneState(ts::Renderer *renderer);
     void enter() override;
     void exit() override;
-    void render(ts::Renderer& renderer) override;
+    void render() override;
     void update(float deltaTime) override;
-    void handleEvent(const SDL_Event* event) override;
+    void handleEvent(const SDL_Event *event) override;
 
-    void setScene(std::unique_ptr<ts::Scene> newScene) {
+    void setScene(std::unique_ptr<ts::Scene> newScene)
+    {
         scene = std::move(newScene);
         sceneLoaded = false;
     }
@@ -23,4 +25,5 @@ public:
 private:
     std::unique_ptr<ts::Scene> scene = nullptr;
     bool sceneLoaded = false;
+    ts::Renderer *renderer = nullptr;
 };

@@ -2,10 +2,12 @@
 
 #include "scene_state.h"
 
-void StateMachine::init()
+void StateMachine::init(ts::Renderer* renderer)
 {
+    this->renderer = renderer;
 
-    addState<SceneState>("scene");
+    addState<SceneState>("scene", renderer);
+
     changeState("scene");
 }
 
@@ -36,11 +38,11 @@ void StateMachine::update(float deltaTime) {
     }
 }
 
-void StateMachine::render(ts::Renderer& renderer) {
+void StateMachine::render() {
     
     if (currentState) {
 
-        currentState->render(renderer);
+        currentState->render();
     }
 }
 
