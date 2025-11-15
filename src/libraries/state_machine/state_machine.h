@@ -25,7 +25,7 @@ public:
 
     void changeState(const std::string& name);
     void update(float deltaTime);
-    void render(Renderer& renderer);
+    void render(ts::Renderer& renderer);
     void handleEvent(const SDL_Event* event);
     void destroy();
 };

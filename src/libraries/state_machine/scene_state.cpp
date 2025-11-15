@@ -20,7 +20,7 @@ void SceneState::exit()
     }
 }
 
-void SceneState::render(Renderer& renderer)
+void SceneState::render(ts::Renderer& renderer)
 {
     if(scene && sceneLoaded){
         scene->render(renderer);

@@ -1,7 +1,5 @@
 add_library(scene STATIC
     scene.cpp
-    map.cpp
-    map.h
     test_scene.cpp
 )
 

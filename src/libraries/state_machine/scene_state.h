@@ -11,7 +11,7 @@ class SceneState : public State
 public:
     void enter() override;
     void exit() override;
-    void render(Renderer& renderer) override;
+    void render(ts::Renderer& renderer) override;
     void update(float deltaTime) override;
     void handleEvent(const SDL_Event* event) override;
 

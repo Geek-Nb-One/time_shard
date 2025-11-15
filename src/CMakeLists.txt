@@ -12,6 +12,7 @@ add_executable(
     libraries/game_object/transform.cpp
     libraries/game_object/camera.cpp
     libraries/renderer/renderer.cpp
+    libraries/renderer/resource_manager.cpp
     )
 
 

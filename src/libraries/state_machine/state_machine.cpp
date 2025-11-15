@@ -36,7 +36,7 @@ void StateMachine::update(float deltaTime) {
     }
 }
 
-void StateMachine::render(Renderer& renderer) {
+void StateMachine::render(ts::Renderer& renderer) {
     
     if (currentState) {
 

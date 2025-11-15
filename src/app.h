@@ -34,7 +34,7 @@ private:
     Statistic stats;
     StateMachine stateMachine;
     InputManager* input = InputManager::getInstance();
-    Renderer renderer;
+    ts::Renderer renderer;
 
     
     
