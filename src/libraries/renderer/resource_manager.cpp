@@ -46,19 +46,45 @@ namespace ts
 
     Texture *ResourceManager::getTexture(TextureID id)
     {
+        auto it = textures.find(id);
+        if (it != textures.end())
+        {
+            return it->second.get();
+        }   
         return nullptr;
     }
     Texture *ResourceManager::getTexture(const std::string &name)
     {
+        auto it = nameToID.find(name);
+        if (it != nameToID.end())
+        {
+            return getTexture(it->second);
+        }
         return nullptr;
     }
     bool ResourceManager::isValid(TextureID id) const
     {
-
-        return false;
+        auto it = textures.find(id);
+        return it != textures.end();
     }
     bool ResourceManager::isValid(const std::string &name) const
     {
+        auto it = nameToID.find(name);
+        if (it != nameToID.end())
+        {
+            return isValid(it->second);
+        }   
         return false;
+    }
+    void ResourceManager::destroy()
+    {
+        for(auto& pair : textures){
+            if(pair.second->sdlTexture){
+                SDL_DestroyTexture(pair.second->sdlTexture);
+                pair.second->sdlTexture = nullptr;
+            }
+        }
+        textures.clear();
+        nameToID.clear();
     }
 } // namespace ts

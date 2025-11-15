@@ -59,6 +59,8 @@ namespace ts
         bool isValid(TextureID id) const;
         bool isValid(const std::string &name) const;
 
+        void destroy();
+
     private:
         std::unordered_map<TextureID, std::unique_ptr<Texture>> textures;
         std::unordered_map<std::string, TextureID> nameToID;
