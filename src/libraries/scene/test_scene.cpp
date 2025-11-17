@@ -4,9 +4,10 @@ namespace ts {
 
 void TestScene::load(Renderer *renderer) {
 
+    Console::log("Loading Test Scene");
     resourceManager.loadTexture(*renderer, "tiles", "D:\\Users\\User\\Documents\\game_studio\\projects\\time_shard\\assets\\arts\\ground_cave_2x2_1.png");
 
-    createCamera();
+    auto camera= createCamera();
 
     GameObject* player = new GameObject();
     player->addComponent<Transform>();
@@ -14,10 +15,14 @@ void TestScene::load(Renderer *renderer) {
     SDL_FRect srcRect = SDL_FRect{0, 0 ,24,24};
     SDL_FRect dstRect = SDL_FRect{-12, -12, 24, 24};
 
-    player->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcRect, dstRect);
+    // player->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcRect, dstRect);
+    player->addComponent<SpriteColor>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-12, -12, 24, 24}, true);
     player->addComponent<PlayerController>();
     addGameObject(player);
     player->init();
+
+    camera->getComponent<CameraTracker>()->setTargetTransform(player->getComponent<Transform>());
+
    
 
     GameObject * playerChild = new GameObject();
@@ -28,6 +33,20 @@ void TestScene::load(Renderer *renderer) {
     playerChild->getComponent<Transform>()->position = glm::vec3(100.0f, 100.0f, 0.0f);
     
 
+    SDL_FRect srcDest[2]= {SDL_FRect{0, 0 ,24,24}, SDL_FRect{0, 24 ,24,24}};
+
+    for (int i = 0; i < 40;i++){
+        for (int j = 0; j < 40 ;j++){
+            int randomTileIndex = rand() % 2;
+
+            GameObject* tile = new GameObject();
+            tile->addComponent<Transform>();
+            tile->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcDest[randomTileIndex], SDL_FRect{-12.0f,-12.0f, 24.0f, 24.0f});
+            addGameObject(tile);
+            tile->init();
+            tile->getComponent<Transform>()->position = glm::vec3(j * 24.0f-40/2*24, i * 24.0f-40/2*24, -1.0f);
+        }
+    }
 
 
     // GameObject* tile = new GameObject();

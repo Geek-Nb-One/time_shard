@@ -2,6 +2,7 @@
 
 #include "pch.h"
 
+#include "../renderer/resource_manager.h"
 
 struct Tile{
     SDL_Texture* texture;
@@ -15,14 +16,20 @@ namespace ts
 
     public:
         MapLoader(int width, int height, int xOrigin, int yOrigin, int tileSize);
-        void load(int width, int height, int xOrigin, int yOrigin, int tileSize);
+        void load(ResourceManager* resourceManager);
         void unload();
 
 
 
     private:
+        int width;
+        int height;
+        int xOrigin;
+        int yOrigin;
+        int tileSize;
 
-        std::vector<SDL_Texture *> tileTextures;
+        std::vector<std::vector<Tile>> tiles;
+
 
     };
 }

@@ -112,7 +112,7 @@ namespace ts
         // Render all objects (they're automatically sorted by z-depth due to std::set)
         for (const auto *obj : renderObjects)
         {
-            Console::logFrame("Rendering object " + std::to_string(obj->objectID) + " at position (" + std::to_string(obj->position.x) + ", " + std::to_string(obj->position.y) + ", " + std::to_string(obj->position.z) + ")");
+            // Console::logFrame("Rendering object " + std::to_string(obj->objectID) + " at position (" + std::to_string(obj->position.x) + ", " + std::to_string(obj->position.y) + ", " + std::to_string(obj->position.z) + ")");
 
             if (obj)
             {
@@ -238,6 +238,6 @@ namespace ts
     {
         obj->objectID = objectID++;
         renderObjects.insert(obj);
-        Console::logFrame("Adding RenderObject " + std::to_string(obj->objectID) + " len of renderObjects " + std::to_string(renderObjects.size()));
+        // Console::logFrame("Adding RenderObject " + std::to_string(obj->objectID) + " len of renderObjects " + std::to_string(renderObjects.size()));
     }
 }

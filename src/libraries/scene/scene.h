@@ -19,7 +19,7 @@ namespace ts
         int addGameObject(GameObject *object);
         GameObject *getGameObject(int id) const;
         void setMainCamera(GameObject *camera);
-        void createCamera();
+        GameObject* createCamera();
 
     private:
         std::unordered_map<int, GameObject *> objects;

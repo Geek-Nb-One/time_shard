@@ -55,15 +55,19 @@ namespace ts
         mainCamera = camera;
     }
 
-    void Scene::createCamera()
+    GameObject* Scene::createCamera()
     {
         GameObject *camera = new GameObject();
         camera->addComponent<Transform>();
         auto c = camera->addComponent<Camera>();
+        camera->addComponent<CameraTracker>();
         addGameObject(camera);
         setMainCamera(camera);
         camera->init();
         c->setDimension(Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
+
+        return camera;
+
     }
     void Scene::addObjectToRender(Renderer* renderer,const GameObject * object, glm::vec3 base_position)
     {

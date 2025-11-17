@@ -7,5 +7,7 @@ add_library(
     sprite_color.cpp
     sprite_texture.cpp
     player_controller.cpp
+    camera_tracker.cpp
+    collider.cpp
 )
 

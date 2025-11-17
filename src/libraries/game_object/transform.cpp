@@ -2,5 +2,4 @@
 
 void ts::Transform::init()
 {
-    Console::log("Transform component initialized");
 }
