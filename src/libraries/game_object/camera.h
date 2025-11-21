@@ -9,8 +9,6 @@ namespace ts
     {
     public:
 
-        void update(float deltaTime) override{};
-        void destroy() override{};
         void init() override;
 
         glm::vec2 getScreenPosition() const;
@@ -22,6 +20,9 @@ namespace ts
         void setDimension(int width, int height);
 
         glm::vec3 getCenter() const;
+
+        UpdatePriority getPriority() const override { return CAMERA; }
+        
     private:
 
         int width, height;

@@ -13,9 +13,9 @@ namespace ts
     class CameraTracker : public Component
     {
     public:
-        void init() override;
+
         void update(float deltaTime) override;
-        void destroy() override{};
+        void init() override;
 
         void setTargetTransform(Transform* target);
         void startTracking();
@@ -28,6 +28,7 @@ namespace ts
 
         FollowType getFollowType() const;
 
+        UpdatePriority getPriority() const override { return CAMERA; }
 
 
     private:

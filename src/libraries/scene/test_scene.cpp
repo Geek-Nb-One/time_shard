@@ -19,6 +19,7 @@ void TestScene::load(Renderer *renderer) {
     // player->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcRect, dstRect);
     player->addComponent<SpriteColor>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-12, -12, 24, 24}, true);
     player->addComponent<PlayerController>();
+    player->addComponent<Movement>();
     player->tag = "Player";
     // player->addComponent<GameObjectTracker>();
     addGameObject(player);

@@ -15,6 +15,8 @@ namespace ts
             std::cout << "GameObject position: " << round(getGameObject()->getComponent<Transform>()->position.x) << "," << round(getGameObject()->getComponent<Transform>()->position.y) << std::endl;
         };
         void destroy() override {};
+
+        UpdatePriority getPriority() const override { return REGULAR; }
     };
 
 }

@@ -1,21 +1,22 @@
 #pragma once
 
-#include "base_component.h"
-#include "transform.h"
+#include "controller_component.h"
+#include "movement.h"
 #include <managers/input_manager.h>
 
 namespace ts
 {
-    class PlayerController : public Component
+    class PlayerController : public ControllerComponent
     {
     public:
         void init() override;
-        void update(float deltaTime) override;
-        void destroy() override{};
+        void readInput() override;
+
+        UpdatePriority getPriority() const override { return INPUT; }
 
     private:
 
-        Transform* transform = nullptr;
+        Movement* movement = nullptr;
         InputManager* input = InputManager::getInstance();
 
         float walkingSpeed = 240.0f;

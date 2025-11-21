@@ -25,6 +25,8 @@ namespace ts
         void setDestinationRect(const SDL_FRect &rect) ;
         SDL_FRect getDestinationRect() const;
 
+        UpdatePriority getPriority() const override { return RENDER; }
+
     private:
         SDL_Texture *texture = nullptr;
         SDL_FRect srcRect{0, 0, 0, 0};

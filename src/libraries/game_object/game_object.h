@@ -37,6 +37,12 @@ namespace ts
             return nullptr;
         }
 
+        void registerComponent(std::map<UpdatePriority, std::vector<Component *>> &componentMap) {
+            for (const auto& [type, compPtr] : components) {
+                componentMap[compPtr->getPriority()].push_back(compPtr.get());
+            }
+        }
+
         void init();
         void update(float deltaTime);
         void destroy();

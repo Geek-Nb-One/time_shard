@@ -8,9 +8,6 @@ namespace ts
     {
     public:
         SpriteColor(const SDL_Color &color = SDL_Color{255, 255, 255, 255}, const SDL_FRect &rect = SDL_FRect{0, 0, 0, 0}, bool isFilled = false);
-        void init() override;
-        void update(float deltaTime) override {};
-        void destroy() override {};
 
         SDL_Color getColor() const;
         SDL_FRect getRect() const;
@@ -21,7 +18,7 @@ namespace ts
 
         void setFilled(bool isFilled);
         bool isFilled() const ;
-
+        UpdatePriority getPriority() const override { return RENDER; }
     private:
         SDL_Color color = SDL_Color{255, 255, 255, 255};
         SDL_FRect rect;

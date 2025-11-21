@@ -19,6 +19,7 @@ namespace ts
         void setHeight(float height);
 
         bool inCameraView(const glm::vec2& cameraPos, int cameraWidth, int cameraHeight) const;
+        UpdatePriority getPriority() const override { return RENDER; }
     private:
 
         float width;

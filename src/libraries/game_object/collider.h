@@ -1,7 +1,7 @@
 #pragma once
 
 #include "base_component.h"
-#include "transform.h"
+#include "movement.h"
 namespace ts
 {
 
@@ -13,13 +13,15 @@ namespace ts
 
         void init() override;
 
-        void setStatic(bool isStatic);
         bool getStatic() const;
 
         glm::vec2 position;
 
+        UpdatePriority getPriority() const override { return REGULAR; }
+
     private:
         bool isStatic = false;
+        Movement* movement = nullptr;
         Transform* transform = nullptr;
     };
 

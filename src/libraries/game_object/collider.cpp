@@ -5,12 +5,16 @@ namespace ts
     void Collider::init()
     {
         transform = getGameObject()->getComponent<Transform>();
-        position = glm::vec2(transform->position.x, transform->position.y);
+        movement = getGameObject()->getComponent<Movement>();
+
+        if (movement == nullptr)
+        {
+            isStatic = true;
+        }
+
     }
 
-        void Collider::setStatic(bool isStatic){
-            this->isStatic = isStatic;
-        }
+ 
         bool Collider::getStatic() const{
             return isStatic;
         }

@@ -9,5 +9,6 @@ add_library(
     player_controller.cpp
     camera_tracker.cpp
     collider.cpp
+    movement.cpp
 )
 

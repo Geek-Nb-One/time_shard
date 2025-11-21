@@ -1,5 +1,7 @@
 #include "scene.h"
 
+#include <game_object/controller_component.h>
+
 namespace ts
 {
 
@@ -23,22 +25,18 @@ namespace ts
 
     void Scene::update(float deltaTime)
     {
+        std::map<UpdatePriority, std::vector<Component *>> componentMap;
 
-        for (const auto &[id, object] : objects)
+        for (auto &[id, object] : objects)
         {
-            bool hasCamera = object->hasComponent<CameraTracker>();
-            if (!hasCamera)
-            {
-                object->update(deltaTime);
-            }
+            object->registerComponent(componentMap);
         }
 
-        // Update camera trackers last
-        for (const auto &[id, object] : objects)
+        for(const auto& [priority, components] : componentMap)
         {
-            if (auto *tracker = object->getComponent<CameraTracker>())
+            for (auto* component : components)
             {
-                tracker->update(deltaTime);
+                component->update(deltaTime);
             }
         }
     }

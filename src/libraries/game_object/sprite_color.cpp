@@ -7,9 +7,7 @@ namespace ts
     {
     }
 
-    void SpriteColor::init()
-    {
-    }
+
 
     SDL_Color SpriteColor::getColor() const
     {
