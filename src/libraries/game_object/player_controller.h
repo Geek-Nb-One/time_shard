@@ -18,7 +18,7 @@ namespace ts
         Transform* transform = nullptr;
         InputManager* input = InputManager::getInstance();
 
-        int walkingSpeed = 200;
+        float walkingSpeed = 240.0f;
 
     };
 }

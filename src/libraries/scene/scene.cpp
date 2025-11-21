@@ -26,7 +26,20 @@ namespace ts
 
         for (const auto &[id, object] : objects)
         {
-            object->update(deltaTime);
+            bool hasCamera = object->hasComponent<CameraTracker>();
+            if (!hasCamera)
+            {
+                object->update(deltaTime);
+            }
+        }
+
+        // Update camera trackers last
+        for (const auto &[id, object] : objects)
+        {
+            if (auto *tracker = object->getComponent<CameraTracker>())
+            {
+                tracker->update(deltaTime);
+            }
         }
     }
 
@@ -49,13 +62,14 @@ namespace ts
 
     void Scene::setMainCamera(GameObject *camera)
     {
-        if(!camera->hasComponent<Camera>()){
+        if (!camera->hasComponent<Camera>())
+        {
             throw std::runtime_error("GameObject does not have a Camera component");
         }
         mainCamera = camera;
     }
 
-    GameObject* Scene::createCamera()
+    GameObject *Scene::createCamera()
     {
         GameObject *camera = new GameObject();
         camera->addComponent<Transform>();
@@ -67,17 +81,17 @@ namespace ts
         c->setDimension(Config::LOGICAL_WIDTH, Config::LOGICAL_HEIGHT);
 
         return camera;
-
     }
-    void Scene::addObjectToRender(Renderer* renderer,const GameObject * object, glm::vec3 base_position)
+    void Scene::addObjectToRender(Renderer *renderer, const GameObject *object, glm::vec3 base_position)
     {
         auto transform = object->getComponent<Transform>();
         auto sprite = object->getComponent<SpriteTexture>();
 
         glm::vec3 position = base_position + transform->position;
 
-        for(auto & child  : object->getChildren()){
-            addObjectToRender(renderer,child.get(),position);
+        for (auto &child : object->getChildren())
+        {
+            addObjectToRender(renderer, child.get(), position);
         }
 
         if (sprite && transform)
@@ -91,11 +105,11 @@ namespace ts
         auto sprite_color = object->getComponent<SpriteColor>();
         if (sprite_color && transform)
         {
-           
+
             renderer->addRectangleRenderObject(
                 sprite_color->getRect(),
                 sprite_color->getColor(),
-                position, 
+                position,
                 sprite_color->isFilled());
         }
     }

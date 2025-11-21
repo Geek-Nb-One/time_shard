@@ -27,6 +27,7 @@ namespace ts
         SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
         setLogicalPresentation();
 
+
         if (Config::imGuiEnabled)
         {
             IMGUI_CHECKVERSION();
@@ -142,9 +143,10 @@ namespace ts
         TextureRenderObject obj;
         obj.texture = const_cast<SDL_Texture *>(texture);
         obj.srcRect = srcRect;
-        obj.dstRect = dstRect;
-        obj.dstRect.x += position.x - static_cast<float>(camera.x);
-        obj.dstRect.y += position.y - static_cast<float>(camera.y);
+        obj.x =static_cast<int>(round(dstRect.x +position.x - camera.x)) ;
+        obj.y =static_cast<int>(round(dstRect.y +position.y - camera.y));
+        obj.w =static_cast<int>(round(dstRect.w));
+        obj.h =static_cast<int>(round(dstRect.h));
         obj.position = position;
         addRenderObject(new TextureRenderObject(obj));
     }
@@ -152,9 +154,10 @@ namespace ts
     void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled)
     {
         RectangleRenderObject obj;
-        obj.rect = rect;
-        obj.rect.x += position.x - static_cast<float>(camera.x);
-        obj.rect.y += position.y - static_cast<float>(camera.y);
+        obj.x =static_cast<int>(round(rect.x +position.x - camera.x)) ;
+        obj.y =static_cast<int>(round(rect.y +position.y - camera.y));
+        obj.w =static_cast<int>(round(rect.w));
+        obj.h =static_cast<int>(round(rect.h));
         obj.color = color;
         obj.position = position;
         obj.filled = filled;

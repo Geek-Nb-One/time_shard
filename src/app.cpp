@@ -123,6 +123,7 @@ void App::render()
     renderer.renderCommand();
 
     uiFrameConsole();
+    
     renderer.render();
 }
 

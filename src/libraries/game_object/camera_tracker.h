@@ -4,6 +4,12 @@
 #include "transform.h"
 namespace ts
 {
+
+    enum FollowType {
+        EXACT,
+        SMOOTH
+    };
+    
     class CameraTracker : public Component
     {
     public:
@@ -18,14 +24,25 @@ namespace ts
 
         Transform* getTransform() const;
 
+        void setFollowType(FollowType type);
+
+        FollowType getFollowType() const;
+
+
+
     private:
         Transform* transform = nullptr;
         Transform* targetTransform = nullptr;
 
         bool _isTracking = false;
 
+        FollowType followType = EXACT;
+
         float baseSpeed = 150.0f;
         float maxSpeed = 200.0f;
         float maxDistance = 50.0f;
+
+        void followExact(float deltaTime);
+        void followSmooth(float deltaTime);
     };
 }

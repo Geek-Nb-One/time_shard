@@ -8,6 +8,7 @@ void TestScene::load(Renderer *renderer) {
     resourceManager.loadTexture(*renderer, "tiles", "D:\\Users\\User\\Documents\\game_studio\\projects\\time_shard\\assets\\arts\\ground_cave_2x2_1.png");
 
     auto camera= createCamera();
+    camera->getComponent<CameraTracker>()->setFollowType(FollowType::SMOOTH);    
 
     GameObject* player = new GameObject();
     player->addComponent<Transform>();
@@ -18,8 +19,11 @@ void TestScene::load(Renderer *renderer) {
     // player->addComponent<SpriteTexture>(resourceManager.getTexture("tiles")->sdlTexture, srcRect, dstRect);
     player->addComponent<SpriteColor>(SDL_Color{255, 0, 0, 255}, SDL_FRect{-12, -12, 24, 24}, true);
     player->addComponent<PlayerController>();
+    player->tag = "Player";
+    // player->addComponent<GameObjectTracker>();
     addGameObject(player);
     player->init();
+    
 
     camera->getComponent<CameraTracker>()->setTargetTransform(player->getComponent<Transform>());
 
@@ -49,12 +53,7 @@ void TestScene::load(Renderer *renderer) {
     }
 
 
-    // GameObject* tile = new GameObject();
-    // tile->addComponent<Transform>();
-    // tile->addComponent<SpriteColor>(SDL_Color{0, 0, 255, 255}, SDL_FRect{-25, -25, 50, 50}, true);
-    // addGameObject(tile);
-    // tile->init();
-    // tile->getComponent<Transform>()->position = glm::vec3(0.0f, 0.0f, -1.0f);
+    
 }
 
 void TestScene::unload() {

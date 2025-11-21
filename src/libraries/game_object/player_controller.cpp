@@ -9,23 +9,30 @@ namespace ts
 
     void PlayerController::update(float deltaTime)
     {
+        // Calculate movement vector
+        glm::vec3 movement(0.0f);
         
         if (input->isActive(ControlAction::MOVE_LEFT))
         {
-            Console::logFrame("Moving Left");
-            transform->position.x -= walkingSpeed * deltaTime;
+            movement.x -= 1.0f;
         }
         if (input->isActive(ControlAction::MOVE_RIGHT))
         {
-            transform->position.x += walkingSpeed * deltaTime;
+            movement.x += 1.0f;
         }
         if (input->isActive(ControlAction::MOVE_UP))
         {
-            transform->position.y -= walkingSpeed * deltaTime;
+            movement.y -= 1.0f;
         }
         if (input->isActive(ControlAction::MOVE_DOWN))
         {
-            transform->position.y += walkingSpeed * deltaTime;
+            movement.y += 1.0f;
+        }
+        
+        // Normalize diagonal movement for consistent speed
+        if (glm::length(movement) > 0.0f) {
+            movement = glm::normalize(movement);
+            transform->position += movement * walkingSpeed * deltaTime;
         }
     }
 }

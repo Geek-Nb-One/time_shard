@@ -8,7 +8,7 @@ namespace ts
     {
 
         virtual void render(SDL_Renderer *renderer) const = 0;
-        glm::vec3 position;
+        glm::i32vec3 position;
         int objectID;
     };
 
@@ -16,30 +16,43 @@ namespace ts
     {
         SDL_Texture *texture = nullptr;
         SDL_FRect srcRect;
-        SDL_FRect dstRect;
+        int32_t x,y,w,h;
         void render(SDL_Renderer *renderer) const override
         {
+            SDL_FRect dstRect;
+            SDL_FRect adjustedSrcRect = srcRect;
+            
+            dstRect.x = static_cast<float>(x);
+            dstRect.y = static_cast<float>(y);
+            dstRect.w = static_cast<float>(w);
+            dstRect.h = static_cast<float>(h);
+
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderTexture(renderer, texture, &srcRect, &dstRect);
+            SDL_RenderTexture(renderer, texture, &adjustedSrcRect, &dstRect);
         }
     };
 
     struct RectangleRenderObject : public RenderObject
     {
-        SDL_FRect rect;
+        uint32_t x,y,w,h;
         SDL_Color color;
         bool filled;
 
         void render(SDL_Renderer *renderer) const override
         {
+            SDL_FRect dstRect;
+            dstRect.x = static_cast<float>(x);
+            dstRect.y = static_cast<float>(y);
+            dstRect.w = static_cast<float>(w);
+            dstRect.h = static_cast<float>(h);
             SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
             if (filled)
             {
-                SDL_RenderFillRect(renderer, &rect);
+                SDL_RenderFillRect(renderer, &dstRect);
             }
             else
             {
-                SDL_RenderRect(renderer, &rect);
+                SDL_RenderRect(renderer, &dstRect);
             }
         }
     };

@@ -48,7 +48,7 @@ namespace ts
         void addChild(std::unique_ptr<GameObject> child) {
             children.push_back(std::move(child));
         }
-
+        std::string tag = "";
     private:
         std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
         std::unique_ptr<GameObject> *parent = nullptr;
