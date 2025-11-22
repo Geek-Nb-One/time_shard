@@ -11,6 +11,6 @@ namespace ts
         glm::vec3 position;
 
         // Add transform-specific methods and members here
-        UpdatePriority getPriority() const override { return REGULAR; }
+        UpdatePriority getPriority() const override { return IGNORE; }
     };
 }

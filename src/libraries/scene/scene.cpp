@@ -1,7 +1,5 @@
 #include "scene.h"
 
-#include <game_object/controller_component.h>
-
 namespace ts
 {
 
@@ -27,18 +25,66 @@ namespace ts
     {
         std::map<UpdatePriority, std::vector<Component *>> componentMap;
 
+        std::vector<Collider *> colliders;
+
         for (auto &[id, object] : objects)
         {
             object->registerComponent(componentMap);
+            if (object->hasComponent<Collider>())
+            {
+                colliders.push_back(object->getComponent<Collider>());
+            }
         }
 
-        for(const auto& [priority, components] : componentMap)
+        auto applyUpdates = [&](UpdatePriority priority)
         {
-            for (auto* component : components)
+            for (auto *component : componentMap[priority])
             {
                 component->update(deltaTime);
             }
+        };
+
+        applyUpdates(UpdatePriority::INPUT);
+        applyUpdates(UpdatePriority::MOVEMENT);
+        applyUpdates(UpdatePriority::REGULAR);
+
+        bool hasCollision = true;
+
+        while (hasCollision)
+        {
+
+            hasCollision = false;
+            std::vector<std::pair<Collider *, Collider *>> collisions;
+
+            for (size_t i = 0; i < colliders.size(); ++i)
+            {
+                if (colliders[i]->isStatic())
+                    continue;
+
+                for (size_t j = i + 1; j < colliders.size(); ++j)
+                {
+                    Collider *colA = colliders[i];
+                    Collider *colB = colliders[j];
+                }
+            }
         }
+        // Simple collision detection
+        for (size_t i = 0; i < colliders.size(); ++i)
+        {
+            if (colliders[i]->isStatic())
+                continue;
+            for (size_t j = i + 1; j < colliders.size(); ++j)
+            {
+
+                if (colliders[i]->isCollidingWith(colliders[j]))
+                {
+
+                    Console::logFrame("Collision detected between colliders");
+                    // Handle collision response here
+                }
+            }
+        }
+        applyUpdates(UpdatePriority::CAMERA);
     }
 
     int Scene::addGameObject(GameObject *object)

@@ -39,12 +39,14 @@ namespace ts
 
         void registerComponent(std::map<UpdatePriority, std::vector<Component *>> &componentMap) {
             for (const auto& [type, compPtr] : components) {
+                if (compPtr->getPriority() == IGNORE) {
+                    continue; // Skip components with IGNORE priority
+                }
                 componentMap[compPtr->getPriority()].push_back(compPtr.get());
             }
         }
 
         void init();
-        void update(float deltaTime);
         void destroy();
 
         const std::vector<std::unique_ptr<GameObject>> & getChildren()  const {

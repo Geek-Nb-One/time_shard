@@ -1,16 +1,16 @@
 #pragma once
 
-#include "controller_component.h"
+#include "base_component.h"
 #include "movement.h"
 #include <managers/input_manager.h>
 
 namespace ts
 {
-    class PlayerController : public ControllerComponent
+    class PlayerController : public Component
     {
     public:
         void init() override;
-        void readInput() override;
+        void update(float deltaTime) override;
 
         UpdatePriority getPriority() const override { return INPUT; }
 

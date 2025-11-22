@@ -5,51 +5,84 @@
 namespace ts
 {
 
-    class Collider : public ts::Component
+    struct Box
     {
-    public:
-
-        virtual float getRadius() const = 0;
-
-        void init() override;
-
-        bool getStatic() const;
-
-        glm::vec2 position;
-
-        UpdatePriority getPriority() const override { return REGULAR; }
-
-    private:
-        bool isStatic = false;
-        Movement* movement = nullptr;
-        Transform* transform = nullptr;
+        float topLeft;
+        float topRight;
+        float bottomLeft;
+        float bottomRight;
     };
 
-    class CircleCollider;
+    struct Circle
+    {
+        glm::vec2 center;
+        float radius;
+    };
 
-    class BoxCollider : public Collider
+    class ColliderShape
     {
     public:
-        BoxCollider(const SDL_FRect &bounds) : bounds(bounds) {}
-        bool checkCollision(const CircleCollider *other) const;
-        bool checkCollision(const BoxCollider *other) const;
-        float getRadius() const override
-        {
-            return sqrt(bounds.w * bounds.w + bounds.h * bounds.h) / 2.0f;
-        }
+        ColliderShape(Transform *transform) : transform(transform) {}
+        virtual bool checkCollisionBox(const Box &box) = 0;
+        virtual bool checkCollisionCircle(const Circle &circle) = 0;
+        virtual bool checkCollision(ColliderShape *other) = 0;
+
+        glm::vec3 getPosition() const;
+
+        bool checkBoxVsBox(const Box &boxA, const Box &boxB) const;
+
+        bool checkBoxVsCircle(const Box &box, const Circle &circle) const;
+
+        bool checkCircleVsCircle(const Circle &circleA, const Circle &circleB) const;
+
+    private:
+        Transform *transform = nullptr;
+    };
+
+    class ColliderShapeBox : public ColliderShape
+    {
+    public:
+        ColliderShapeBox(Transform *transform, const SDL_FRect &bounds) : ColliderShape(transform), bounds(bounds) {}
+        bool checkCollisionBox(const Box &box) override;
+        bool checkCollisionCircle(const Circle &circle) override;
+        bool checkCollision(ColliderShape *other) override;
 
     private:
         SDL_FRect bounds;
+
+        Box getBox() const;
     };
 
-    class CircleCollider : public Collider
+    class ColliderShapeCircle : public ColliderShape
     {
     public:
-        bool checkCollision(const CircleCollider *other) const;
-        bool checkCollision(const BoxCollider *other) const;
+        ColliderShapeCircle(Transform *transform, const float radius) : ColliderShape(transform), radius(radius) {}
+        bool checkCollisionBox(const Box &box) override;
+        bool checkCollisionCircle(const Circle &circle) override;
+        bool checkCollision(ColliderShape *other) override;
 
-        float getRadius() const override;
     private:
         float radius;
+        Circle getCircle() const;
+    };
+
+    class Collider : public Component
+    {
+    public:
+        void init() override;
+        bool isStatic() const;
+
+        void setShapeBox(const SDL_FRect &bounds);
+        void setShapeCircle(const float radius);
+
+        UpdatePriority getPriority() const override { return IGNORE; }
+
+        bool isCollidingWith(Collider *other);
+
+    private:
+        bool _isStatic = false;
+        ColliderShape *shape = nullptr;
+        Movement *movement = nullptr;
+        Transform *transform = nullptr;
     };
 }

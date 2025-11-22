@@ -9,12 +9,6 @@ void ts::GameObject::init()
     }
 }
 
-void ts::GameObject::update(float deltaTime)
-{
-    for(const auto& [key, comp] : components) {
-        comp->update(deltaTime);
-    }
-}
 
 void ts::GameObject::destroy()
 {

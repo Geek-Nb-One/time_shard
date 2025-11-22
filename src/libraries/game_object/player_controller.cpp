@@ -7,7 +7,7 @@ namespace ts
         movement = getGameObject()->getComponent<Movement>();
     }
 
-    void PlayerController::readInput()
+    void PlayerController::update(float deltaTime)
     {
             // Calculate movement vector
         glm::vec3 direction(0.0f);

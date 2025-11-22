@@ -7,6 +7,7 @@ namespace ts
     class GameObject;
 
     enum UpdatePriority{
+        IGNORE = 0,
         INPUT = 100,
         MOVEMENT = 200,
         REGULAR = 300,
