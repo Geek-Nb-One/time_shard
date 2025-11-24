@@ -14,12 +14,16 @@ namespace ts
 
         UpdatePriority getPriority() const override { return INPUT; }
 
+        void setEnabled(bool isEnabled);
+
     private:
 
         Movement* movement = nullptr;
         InputManager* input = InputManager::getInstance();
 
         float walkingSpeed = 240.0f;
+
+        bool enabled = true;
 
     };
 }

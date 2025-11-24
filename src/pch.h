@@ -27,6 +27,14 @@ typedef std::pair<int, int> Point;
 
 #include "config.h"
 
+
+enum Direction{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    NONE
+};
 class Console
 {
 

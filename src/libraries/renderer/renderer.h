@@ -26,7 +26,7 @@ namespace ts
 
         void addTextureRenderObject(const SDL_Texture *texture, const SDL_FRect &srcRect, const SDL_FRect &dstRect, const glm::vec3 &position);
         void addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled);
-        
+        void addCircleRenderObject(const glm::vec3 &position, float radius, const SDL_Color &color, bool filled);
         SDL_Texture* loadTexture(const std::string &filePath,int& width, int& height);
         
     private:

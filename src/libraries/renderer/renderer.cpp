@@ -27,7 +27,6 @@ namespace ts
         SDL_SetRenderDrawBlendMode(sdlRenderer, SDL_BLENDMODE_BLEND);
         setLogicalPresentation();
 
-
         if (Config::imGuiEnabled)
         {
             IMGUI_CHECKVERSION();
@@ -143,10 +142,10 @@ namespace ts
         TextureRenderObject obj;
         obj.texture = const_cast<SDL_Texture *>(texture);
         obj.srcRect = srcRect;
-        obj.x =static_cast<int>(round(dstRect.x +position.x - camera.x)) ;
-        obj.y =static_cast<int>(round(dstRect.y +position.y - camera.y));
-        obj.w =static_cast<int>(round(dstRect.w));
-        obj.h =static_cast<int>(round(dstRect.h));
+        obj.x = static_cast<int>(round(dstRect.x + position.x - camera.x));
+        obj.y = static_cast<int>(round(dstRect.y + position.y - camera.y));
+        obj.w = static_cast<int>(round(dstRect.w));
+        obj.h = static_cast<int>(round(dstRect.h));
         obj.position = position;
         addRenderObject(new TextureRenderObject(obj));
     }
@@ -154,14 +153,25 @@ namespace ts
     void Renderer::addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled)
     {
         RectangleRenderObject obj;
-        obj.x =static_cast<int>(round(rect.x +position.x - camera.x)) ;
-        obj.y =static_cast<int>(round(rect.y +position.y - camera.y));
-        obj.w =static_cast<int>(round(rect.w));
-        obj.h =static_cast<int>(round(rect.h));
+        obj.x = static_cast<int>(round(rect.x + position.x - camera.x));
+        obj.y = static_cast<int>(round(rect.y + position.y - camera.y));
+        obj.w = static_cast<int>(round(rect.w));
+        obj.h = static_cast<int>(round(rect.h));
         obj.color = color;
         obj.position = position;
         obj.filled = filled;
         addRenderObject(new RectangleRenderObject(obj));
+    }
+
+    void Renderer::addCircleRenderObject(const glm::vec3 &position, float radius, const SDL_Color &color, bool filled)
+    {
+        CircleRenderObject obj;
+        obj.x = static_cast<int>(round(position.x - camera.x));
+        obj.y = static_cast<int>(round(position.y - camera.y));
+        obj.radius = static_cast<int>(round(radius));
+        obj.color = color;
+        obj.filled = filled;
+        addRenderObject(new CircleRenderObject(obj));
     }
 
     SDL_Texture *Renderer::loadTexture(const std::string &filePath, int &width, int &height)

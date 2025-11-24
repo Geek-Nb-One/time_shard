@@ -6,9 +6,12 @@ add_library(
     base_component.cpp
     sprite_color.cpp
     sprite_texture.cpp
+    sprite_circle.cpp
     player_controller.cpp
     camera_tracker.cpp
     collider.cpp
     movement.cpp
+    animator.cpp
+    player_state_machine.cpp
 )
 

@@ -12,13 +12,12 @@ namespace ts
     {
     public:
         void load(Renderer *renderer) override;
-        void unload() override;
 
     private:
         // void loadMap();
 
         bool trackPlayer = true;
-        ResourceManager resourceManager;
+
 
     };
 }

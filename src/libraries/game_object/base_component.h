@@ -11,8 +11,9 @@ namespace ts
         INPUT = 100,
         MOVEMENT = 200,
         REGULAR = 300,
-        CAMERA = 400,
-        RENDER = 500
+        ANIMATION = 400,
+        CAMERA = 500,
+        RENDER = 600
     };
 
     class Component

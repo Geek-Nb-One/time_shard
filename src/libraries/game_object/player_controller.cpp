@@ -38,4 +38,8 @@ namespace ts
             movement->stop();
         }
     }
+    void PlayerController::setEnabled(bool isEnabled)
+    {
+        enabled = isEnabled;
+    }
 }

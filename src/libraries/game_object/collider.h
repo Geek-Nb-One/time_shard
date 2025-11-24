@@ -79,6 +79,8 @@ namespace ts
 
         bool isCollidingWith(Collider *other);
 
+        void moveBack();
+
     private:
         bool _isStatic = false;
         ColliderShape *shape = nullptr;

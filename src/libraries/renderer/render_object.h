@@ -16,12 +16,12 @@ namespace ts
     {
         SDL_Texture *texture = nullptr;
         SDL_FRect srcRect;
-        int32_t x,y,w,h;
+        int32_t x, y, w, h;
         void render(SDL_Renderer *renderer) const override
         {
             SDL_FRect dstRect;
             SDL_FRect adjustedSrcRect = srcRect;
-            
+
             dstRect.x = static_cast<float>(x);
             dstRect.y = static_cast<float>(y);
             dstRect.w = static_cast<float>(w);
@@ -34,7 +34,7 @@ namespace ts
 
     struct RectangleRenderObject : public RenderObject
     {
-        uint32_t x,y,w,h;
+        int32_t x, y, w, h;
         SDL_Color color;
         bool filled;
 
@@ -54,6 +54,31 @@ namespace ts
             {
                 SDL_RenderRect(renderer, &dstRect);
             }
+        }
+    };
+
+    struct CircleRenderObject : public RenderObject
+    {
+        int32_t x, y;
+        float radius;
+        SDL_Color color;
+        bool filled;
+
+        void render(SDL_Renderer *renderer) const override
+        {
+            SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+            std::vector<SDL_FPoint> points;
+            for (int i = -radius; i <= radius; i++)
+            {
+                for (int j = -radius; j <= radius; j++)
+                {
+                    if (i * i + j * j <= radius * radius)
+                    {
+                        points.push_back({static_cast<float>(x + i), static_cast<float>(y + j)});
+                    }
+                }
+            }
+            SDL_RenderPoints(renderer, points.data(), points.size());
         }
     };
 

@@ -10,6 +10,7 @@ namespace ts
 
     bool ColliderShape::checkBoxVsBox(const Box &boxA, const Box &boxB) const
     {
+         Console::logFrame("Checking Box vs Box collision");
         // Check for overlap on both axes
         return (boxA.topLeft < boxB.bottomRight && boxA.topRight > boxB.bottomLeft &&
                 boxA.bottomLeft < boxB.topRight && boxA.bottomRight > boxB.topLeft);
@@ -17,6 +18,8 @@ namespace ts
 
     bool ColliderShape::checkBoxVsCircle(const Box &box, const Circle &circle) const
     {
+
+       
         // Find closest point on box to circle center
         float closestX = std::max(box.topLeft, std::min(circle.center.x, box.topRight));
         float closestY = std::max(box.bottomLeft, std::min(circle.center.y, box.bottomRight));
@@ -95,7 +98,10 @@ namespace ts
 
         if (movement == nullptr)
         {
+            Console::log("Collider: No Movement component found, setting as static collider.");
             _isStatic = true;
+        }else{
+            Console::log("Collider: Movement component found, setting as dynamic collider.");
         }
     }
 
@@ -106,11 +112,17 @@ namespace ts
 
     void Collider::setShapeBox(const SDL_FRect &bounds)
     {
+        if(shape != nullptr){
+            delete shape;
+        }
         shape = new ColliderShapeBox(transform, bounds);
     }
 
     void Collider::setShapeCircle(const float radius)
     {
+         if(shape != nullptr){
+            delete shape;
+        }
         shape = new ColliderShapeCircle(transform, radius);
     }
 
@@ -121,5 +133,11 @@ namespace ts
             return shape->checkCollision(other->shape);
         }
         return false;
+    }
+    void Collider::moveBack()
+    {
+        if(movement){
+            movement->moveBack();
+        }
     }
 }

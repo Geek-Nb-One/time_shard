@@ -14,7 +14,7 @@ namespace ts
         void render(Renderer *renderer);
         void update(float deltaTime);
         virtual void load(Renderer *renderer) = 0;
-        virtual void unload() = 0;
+        void unload();
 
         int addGameObject(GameObject *object);
         GameObject *getGameObject(int id) const;
@@ -28,5 +28,8 @@ namespace ts
         int nextID = 0;
 
         void addObjectToRender(Renderer* renderer,const GameObject * object, glm::vec3 position);
+    protected:
+        ResourceManager resourceManager;
+
     };
 }

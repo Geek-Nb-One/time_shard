@@ -3,6 +3,9 @@
 namespace ts
 {
 
+
+    
+
     void Scene::render(Renderer *renderer)
     {
         if (mainCamera == nullptr)
@@ -36,8 +39,11 @@ namespace ts
             }
         }
 
-        auto applyUpdates = [&](UpdatePriority priority)
+        auto applyUpdates = [&](UpdatePriority priority, bool verbose = false)
         {
+            if (verbose) {
+                Console::logFrame("Updating components with priority: " + std::to_string(priority) + " Count: " + std::to_string(componentMap[priority].size()));
+            }   
             for (auto *component : componentMap[priority])
             {
                 component->update(deltaTime);
@@ -50,6 +56,7 @@ namespace ts
 
         bool hasCollision = true;
 
+        Console::logFrame("Starting collision detection for " + std::to_string(colliders.size()) + " colliders.");
         while (hasCollision)
         {
 
@@ -58,39 +65,45 @@ namespace ts
 
             for (size_t i = 0; i < colliders.size(); ++i)
             {
-                if (colliders[i]->isStatic())
-                    continue;
+                
+                Console::logFrame("Checking collision between colliders");
 
                 for (size_t j = i + 1; j < colliders.size(); ++j)
                 {
-                    Collider *colA = colliders[i];
-                    Collider *colB = colliders[j];
+                    if (colliders[i]->isStatic() && colliders[j]->isStatic())
+                        continue;
+                    if (colliders[i]->isCollidingWith(colliders[j]))
+                    {
+                        hasCollision = true;
+                        while(colliders[i]->isCollidingWith(colliders[j])){
+                            colliders[i]->moveBack();
+                            colliders[j]->moveBack();
+                        }
+                        Console::logFrame("Collision detected between colliders");
+                        // Handle collision response here
+                    }
                 }
             }
         }
-        // Simple collision detection
-        for (size_t i = 0; i < colliders.size(); ++i)
-        {
-            if (colliders[i]->isStatic())
-                continue;
-            for (size_t j = i + 1; j < colliders.size(); ++j)
-            {
 
-                if (colliders[i]->isCollidingWith(colliders[j]))
-                {
-
-                    Console::logFrame("Collision detected between colliders");
-                    // Handle collision response here
-                }
-            }
-        }
+        applyUpdates(UpdatePriority::ANIMATION,true);
         applyUpdates(UpdatePriority::CAMERA);
+    }
+
+    void Scene::unload()
+    {
+        resourceManager.unload();
+        for(auto& [id, object] : objects){
+            object->destroy();
+            delete object;
+        }
     }
 
     int Scene::addGameObject(GameObject *object)
     {
         int objID = nextID++;
         objects[objID] = object;
+        object->init();
         return objID;
     }
 
@@ -155,6 +168,17 @@ namespace ts
                 sprite_color->getColor(),
                 position,
                 sprite_color->isFilled());
+        }
+
+        auto sprite_circle = object->getComponent<SpriteCircle>();
+        if (sprite_circle && transform)
+        {
+
+            renderer->addCircleRenderObject(
+                position,
+                sprite_circle->getRadius(),
+                sprite_circle->getColor(),
+                sprite_circle->isFilled());
         }
     }
 }
