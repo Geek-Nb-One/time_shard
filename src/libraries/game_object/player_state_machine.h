@@ -16,11 +16,11 @@ namespace ts
     };
 
 
-    class PlayerStateMachine : public StateMachine<PlayerState>
+    class PlayerStateMachine : public ComponentStateMachine<PlayerState>
     {
 
         public:
-            PlayerStateMachine() : StateMachine<PlayerState>(PlayerState::IDLE) {}
+            PlayerStateMachine() : ComponentStateMachine<PlayerState>(PlayerState::IDLE) {}
 
             void init() override;
 

@@ -9,7 +9,7 @@ namespace ts
     {
 
     public:
-        void load(ts::Renderer *renderer) override;
+        void load(Renderer *renderer) override;
 
     };
 }

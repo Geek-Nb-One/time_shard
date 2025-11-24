@@ -3,27 +3,25 @@
 #include "state.h"
 #include <scene/scene.h>
 
-#include <scene/test_scene.h>
+
 #include <renderer/renderer.h>
 
-class SceneState : public State
+namespace ts
 {
-public:
-    SceneState(ts::Renderer *renderer);
-    void enter() override;
-    void exit() override;
-    void render() override;
-    void update(float deltaTime) override;
-    void handleEvent(const SDL_Event *event) override;
-
-    void setScene(std::unique_ptr<ts::Scene> newScene)
+    class SceneState : public State
     {
-        scene = std::move(newScene);
-        sceneLoaded = false;
-    }
+    public:
+        SceneState(Scene* scene,Renderer *renderer);
+        void enter() override;
+        void exit() override;
+        void render() override;
+        void update(float deltaTime) override;
+        void handleEvent(const SDL_Event *event) override;
 
-private:
-    std::unique_ptr<ts::Scene> scene = nullptr;
-    bool sceneLoaded = false;
-    ts::Renderer *renderer = nullptr;
-};
+      
+    private:
+        std::unique_ptr<Scene> scene = nullptr;
+        bool sceneLoaded = false;
+        ts::Renderer *renderer = nullptr;
+    };
+}

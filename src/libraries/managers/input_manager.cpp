@@ -15,6 +15,7 @@ void InputManager::init()
     actionActive[ControlAction::MOVE_UP] = false;
     actionActive[ControlAction::MOVE_DOWN] = false;
     actionActive[ControlAction::CAMERA_ATTACH_TOGGLE] = false;
+    actionActive[ControlAction::START_ACTION] = false;
 
     initGamepad();
 
@@ -114,6 +115,7 @@ void InputManager::processAxisEvent(const SDL_Event *event)
 void InputManager::updateTriggerAction()
 {
     actionActive[ControlAction::CAMERA_ATTACH_TOGGLE] = keyIsTriggered(SDLK_SPACE);
+    actionActive[ControlAction::START_ACTION] = keyIsTriggered(SDLK_RETURN);
 }
 
 void InputManager::updatePressedAction()

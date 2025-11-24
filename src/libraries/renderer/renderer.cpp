@@ -121,7 +121,7 @@ namespace ts
         }
     }
 
-    void Renderer::render()
+    void Renderer::present()
     {
 
         if (Config::imGuiEnabled)

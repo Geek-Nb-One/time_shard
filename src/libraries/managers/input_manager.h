@@ -8,7 +8,8 @@ enum ControlAction
     MOVE_RIGHT,
     MOVE_UP,
     MOVE_DOWN,
-    CAMERA_ATTACH_TOGGLE
+    CAMERA_ATTACH_TOGGLE, 
+    START_ACTION
 };
 
 // const int LEFT = 0;

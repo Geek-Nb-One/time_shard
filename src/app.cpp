@@ -124,7 +124,7 @@ void App::render()
 
     uiFrameConsole();
     
-    renderer.render();
+    renderer.present();
 }
 
 void App::uiConsole()

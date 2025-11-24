@@ -1,45 +1,49 @@
 #include "scene_state.h"
 
-SceneState::SceneState(ts::Renderer *renderer)
+namespace ts
 {
-    this->renderer = renderer;
-}
+    SceneState::SceneState(Scene* scene,Renderer *renderer): scene(std::move(scene)), renderer(renderer)
+    {
 
-void SceneState::enter()
-{
-    
-    Console::log("Entering SceneState");
-    if(!sceneLoaded && scene == nullptr){
-        scene = std::make_unique<ts::TestScene>();
-        scene->load(renderer);
-        sceneLoaded = true;
-        Console::log("Scene loaded in SceneState");
     }
-}
 
-void SceneState::exit()
-{   
-    if(sceneLoaded && scene){
-        scene->unload();
-        sceneLoaded = false;
+    void SceneState::enter()
+    {
+        Console::log("Entering SceneState");
+        if (!sceneLoaded && scene != nullptr)
+        {
+            scene->load(renderer);
+            sceneLoaded = true;
+            Console::log("Scene loaded in SceneState");
+        }
     }
-}
 
-void SceneState::render()
-{
-    if(scene && sceneLoaded){
-        scene->render(renderer);
+    void SceneState::exit()
+    {
+        if (sceneLoaded && scene)
+        {
+            scene->unload();
+            sceneLoaded = false;
+        }
     }
-}
 
-void SceneState::update(float deltaTime)
-{
-    if(scene && sceneLoaded){
-        scene->update(deltaTime);
+    void SceneState::render()
+    {
+        if (scene && sceneLoaded)
+        {
+            scene->render(renderer);
+        }
     }
-}
 
-void SceneState::handleEvent(const SDL_Event *event)
-{
+    void SceneState::update(float deltaTime)
+    {
+        if (scene && sceneLoaded)
+        {
+            scene->update(deltaTime);
+        }
+    }
 
+    void SceneState::handleEvent(const SDL_Event *event)
+    {
+    }
 }

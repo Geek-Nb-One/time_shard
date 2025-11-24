@@ -1,6 +1,8 @@
 #pragma once
 
 #include "base_component.h"
+#include <unordered_map>
+#include <functional>
 
 namespace ts
 {
@@ -15,10 +17,10 @@ namespace ts
     };
 
     template <typename StateType>
-    class StateMachine : public Component
+    class ComponentStateMachine : public Component
     {
     public:
-        StateMachine(StateType initialState) : currentState(initialState) {}
+        ComponentStateMachine(StateType initialState) : currentState(initialState) {}
 
         void addState(StateType state, std::function<void(float)> updateFunction) {
             stateUpdates[state] = updateFunction;

@@ -13,5 +13,6 @@ add_library(
     movement.cpp
     animator.cpp
     player_state_machine.cpp
+    ui_controller.cpp
 )
 

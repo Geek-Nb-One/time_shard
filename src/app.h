@@ -32,7 +32,7 @@ private:
     void uiFrameConsole();
 
     Statistic stats;
-    StateMachine stateMachine;
+    ts::StateMachine stateMachine;
     InputManager* input = InputManager::getInstance();
     ts::Renderer renderer;
 

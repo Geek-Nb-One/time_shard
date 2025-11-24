@@ -22,7 +22,7 @@ namespace ts
         void setCamera(glm::vec2 cameraPosition, int cameraWidth, int cameraHeight);
 
         void renderCommand();
-        void render();
+        void present();
 
         void addTextureRenderObject(const SDL_Texture *texture, const SDL_FRect &srcRect, const SDL_FRect &dstRect, const glm::vec3 &position);
         void addRectangleRenderObject(const SDL_FRect &rect, const SDL_Color &color, const glm::vec3 &position, bool filled);

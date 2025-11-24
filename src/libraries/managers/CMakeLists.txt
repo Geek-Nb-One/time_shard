@@ -1,6 +1,6 @@
 add_library(managers STATIC
 input_manager.cpp
-
+event_manager.cpp
 )
 
 
