@@ -1,6 +1,6 @@
 #pragma once
 
-#include "state_machine.h"
+#include "state_machine_component.h"
 #include "movement.h"
 #include "animator.h"
 #include "player_controller.h"
@@ -16,11 +16,11 @@ namespace ts
     };
 
 
-    class PlayerStateMachine : public ComponentStateMachine<PlayerState>
+    class StateMachinePlayer : public StateMachineComponent<PlayerState>
     {
 
         public:
-            PlayerStateMachine() : ComponentStateMachine<PlayerState>(PlayerState::IDLE) {}
+            StateMachinePlayer() : StateMachineComponent<PlayerState>(PlayerState::IDLE) {}
 
             void init() override;
 

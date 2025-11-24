@@ -1,8 +1,8 @@
-#include "player_state_machine.h"
+#include "state_machine_player.h"
 
 namespace ts
 {
-    void PlayerStateMachine::init()
+    void StateMachinePlayer::init()
     {
 
         movement = getGameObject()->getComponent<Movement>();
@@ -37,10 +37,10 @@ namespace ts
         // Set initial state
         changeState(PlayerState::IDLE);
     }
-    void PlayerStateMachine::updateIdle(float deltaTime)
+    void StateMachinePlayer::updateIdle(float deltaTime)
     {
     }
-    void PlayerStateMachine::updateWalking(float deltaTime)
+    void StateMachinePlayer::updateWalking(float deltaTime)
     {
         auto checkDirection = movement->getDirection();
         if(checkDirection != playerDirection)
@@ -49,13 +49,13 @@ namespace ts
             startWalking();
         }
     }
-    void PlayerStateMachine::startIdle()
+    void StateMachinePlayer::startIdle()
     {
 
         animator->playAnimation("idle", true);
 
     }
-    void PlayerStateMachine::startWalking()
+    void StateMachinePlayer::startWalking()
     {
         switch(playerDirection)
         {
@@ -79,13 +79,13 @@ namespace ts
     }
    
 
-    void PlayerStateMachine::endIdle()
+    void StateMachinePlayer::endIdle()
     {
     }
-    void PlayerStateMachine::endWalking()
+    void StateMachinePlayer::endWalking()
     {
     }
-    void PlayerStateMachine::onStateEnter(PlayerState state)
+    void StateMachinePlayer::onStateEnter(PlayerState state)
     {
         switch (state)
         {
@@ -97,7 +97,7 @@ namespace ts
             break;
         }
     }
-    void PlayerStateMachine::onStateExit(PlayerState state)
+    void StateMachinePlayer::onStateExit(PlayerState state)
     {
         switch (state)
         {

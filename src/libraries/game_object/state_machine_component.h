@@ -17,10 +17,10 @@ namespace ts
     };
 
     template <typename StateType>
-    class ComponentStateMachine : public Component
+    class StateMachineComponent : public Component
     {
     public:
-        ComponentStateMachine(StateType initialState) : currentState(initialState) {}
+        StateMachineComponent(StateType initialState) : currentState(initialState) {}
 
         void addState(StateType state, std::function<void(float)> updateFunction) {
             stateUpdates[state] = updateFunction;

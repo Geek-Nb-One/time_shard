@@ -24,7 +24,7 @@ namespace ts
         player->addComponent<SpriteTexture>();
         player->addComponent<PlayerController>();
         player->addComponent<Movement>();
-        player->addComponent<PlayerStateMachine>();
+        player->addComponent<StateMachinePlayer>();
         Animator *animator = player->addComponent<Animator>();
 
 
