@@ -11,6 +11,7 @@ namespace ts
 
     enum class PlayerState
     {
+        NONE,
         IDLE,
         WALKING
     };
@@ -20,7 +21,7 @@ namespace ts
     {
 
         public:
-            StateMachinePlayer() : StateMachineComponent<PlayerState>(PlayerState::IDLE) {}
+            StateMachinePlayer() : StateMachineComponent<PlayerState>(PlayerState::NONE) {}
 
             void init() override;
 

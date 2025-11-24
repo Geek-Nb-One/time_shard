@@ -12,7 +12,7 @@ add_library(
     collider.cpp
     movement.cpp
     animator.cpp
-    player_state_machine.cpp
+    state_machine_player.cpp
     ui_controller.cpp
 )
 

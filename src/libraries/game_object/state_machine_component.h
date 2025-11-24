@@ -35,6 +35,7 @@ namespace ts
         }
 
         void changeState(StateType newState) {
+            Console::log("Changing state from " + std::to_string(static_cast<int>(currentState)) + " to " + std::to_string(static_cast<int>(newState)));
             if (newState != currentState) {
                 onStateExit(currentState);
                 

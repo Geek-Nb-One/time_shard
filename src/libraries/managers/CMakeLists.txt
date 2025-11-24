@@ -1,7 +1,9 @@
 add_library(managers STATIC
 input_manager.cpp
 event_manager.cpp
+audio_manager.cpp
 )
+
 
 
 target_precompile_headers(managers PRIVATE pch.h)

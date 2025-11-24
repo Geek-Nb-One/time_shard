@@ -57,7 +57,7 @@ namespace ts
         addGameObject(player);
 
         player->getComponent<Collider>()->setShapeBox(SDL_FRect{-12.0f, -12.0f, 24.0f, 24.0f});
-
+        
         GameObject *npc = new GameObject();
         npc->addComponent<Transform>();
         npc->addComponent<SpriteCircle>(SDL_Color{0, 255, 255, 255}, 12, true);

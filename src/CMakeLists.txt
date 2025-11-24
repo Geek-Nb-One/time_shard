@@ -16,7 +16,7 @@ add_executable(
     )
 
 
-link_libraries(SDL3::SDL3 SDL3_image::SDL3_image glm)
+link_libraries(SDL3::SDL3 SDL3_image::SDL3_image SDL3_mixer::SDL3_mixer glm)
 include_directories(libraries ${CMAKE_SOURCE_DIR}/third_party)
     
 target_precompile_headers(time_shard PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pch.h)

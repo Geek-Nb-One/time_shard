@@ -35,7 +35,7 @@ private:
     ts::StateMachine stateMachine;
     InputManager* input = InputManager::getInstance();
     ts::Renderer renderer;
-
+    
     
     
 };

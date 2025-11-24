@@ -12,5 +12,5 @@
 #include "game_object_tracker.h"
 #include "movement.h"
 #include "animator.h"
-#include "player_state_machine.h"
+#include "state_machine_player.h"
 #include "ui_controller.h"

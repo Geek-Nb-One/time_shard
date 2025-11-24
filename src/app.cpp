@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include <managers/audio_manager.h>
+
 void App::run()
 {
 
@@ -29,6 +31,8 @@ void App::init()
     renderer.init();
     stateMachine.init(&renderer);
     input->init();
+
+    ts::AudioManager::getInstance()->init();
 
     Console::log("Application initialized");
 }

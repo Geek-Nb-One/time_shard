@@ -1,10 +1,9 @@
 #include "scene.h"
 
+#include <managers/audio_manager.h>
+
 namespace ts
 {
-
-
-    
 
     void Scene::render(Renderer *renderer)
     {
@@ -41,9 +40,10 @@ namespace ts
 
         auto applyUpdates = [&](UpdatePriority priority, bool verbose = false)
         {
-            if (verbose) {
+            if (verbose)
+            {
                 Console::logFrame("Updating components with priority: " + std::to_string(priority) + " Count: " + std::to_string(componentMap[priority].size()));
-            }   
+            }
             for (auto *component : componentMap[priority])
             {
                 component->update(deltaTime);
@@ -65,7 +65,7 @@ namespace ts
 
             for (size_t i = 0; i < colliders.size(); ++i)
             {
-                
+
                 Console::logFrame("Checking collision between colliders");
 
                 for (size_t j = i + 1; j < colliders.size(); ++j)
@@ -75,7 +75,8 @@ namespace ts
                     if (colliders[i]->isCollidingWith(colliders[j]))
                     {
                         hasCollision = true;
-                        while(colliders[i]->isCollidingWith(colliders[j])){
+                        while (colliders[i]->isCollidingWith(colliders[j]))
+                        {
                             colliders[i]->moveBack();
                             colliders[j]->moveBack();
                         }
@@ -86,14 +87,17 @@ namespace ts
             }
         }
 
-        applyUpdates(UpdatePriority::ANIMATION,true);
+        applyUpdates(UpdatePriority::ANIMATION, true);
         applyUpdates(UpdatePriority::CAMERA);
     }
 
     void Scene::unload()
     {
-        resourceManager.unload();
-        for(auto& [id, object] : objects){
+        AudioManager::getInstance()->clear();
+        
+            resourceManager.unload();
+        for (auto &[id, object] : objects)
+        {
             object->destroy();
             delete object;
         }
